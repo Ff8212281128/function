@@ -1500,21 +1500,23 @@
     <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
       <!-- شبکه -->
       <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-        <line x1="90"  y1="40" x2="90"  y2="240"/>
-        <line x1="140" y1="40" x2="140" y2="240"/>
-        <line x1="190" y1="40" x2="190" y2="240"/>
-        <line x1="240" y1="40" x2="240" y2="240"/>
-        <line x1="290" y1="40" x2="290" y2="240"/>
-        <line x1="340" y1="40" x2="340" y2="240"/>
+        <line x1="90"  y1="40" x2="90"  y2="260"/>
+        <line x1="140" y1="40" x2="140" y2="260"/>
+        <line x1="190" y1="40" x2="190" y2="260"/>
+        <line x1="240" y1="40" x2="240" y2="260"/>
+        <line x1="290" y1="40" x2="290" y2="260"/>
+        <line x1="340" y1="40" x2="340" y2="260"/>
         <line x1="50"  y1="60"  x2="410" y2="60"/>
         <line x1="50"  y1="100" x2="410" y2="100"/>
         <line x1="50"  y1="140" x2="410" y2="140"/>
         <line x1="50"  y1="180" x2="410" y2="180"/>
+        <line x1="50"  y1="220" x2="410" y2="220"/>
+        <line x1="50"  y1="260" x2="410" y2="260"/>
       </g>
 
       <!-- محورها: محور xها روی y = 200 -->
       <line x1="50" y1="200" x2="425" y2="200" stroke="#7dd3fc" stroke-width="2"/>
-      <line x1="50" y1="260" x2="50"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+      <line x1="50" y1="270" x2="50"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
       <polygon points="425,200 415,195 415,205" fill="#7dd3fc"/>
       <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
       <text x="417" y="218" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
@@ -1529,19 +1531,16 @@
         <text x="290" y="218">۵</text>
       </g>
 
-      <!-- خط y = 2x − 4 :
-           x=2 → y=0 → (140, 200) روی محور
-           x=5 → y=6 → (290, 80) چون هر واحد عمودی ۲۰ پیکسل: 200-6*20=80 -->
+      <!-- خط y = 2x − 4 : یک خط واحد، بدون شکستگی
+           x=0  → y=−4 → (50, 280)
+           x=5  → y=6  → (290, 80)
+           شیب درست: ۲ واحد عمودی به ازای هر ۱ واحد افقی
+           ضریب عمودی ۲۰ پیکسل برای هر واحد -->
       <line class="draw" style="--delay:1.0s"
-            x1="140" y1="200" x2="290" y2="80"
+            x1="50" y1="280" x2="290" y2="80"
             stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
 
-      <!-- امتداد خط به سمت چپ-پایین -->
-      <line class="draw" style="--delay:1.2s"
-            x1="140" y1="200" x2="90" y2="300"
-            stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
-
-      <!-- ریشه در x = 2 -->
+      <!-- ریشه در x = 2 → روی خط در (140, 200) -->
       <circle class="pt" style="--delay:1.6s" cx="140" cy="200" r="10"
               fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
       <text class="pt" style="--delay:1.9s" x="140" y="240"
@@ -1553,7 +1552,8 @@
   <div class="rule rise" style="--delay:2.2s">
     y = 2x − 4 &nbsp;→&nbsp; حل معادله: 2x − 4 = 0 &nbsp;→&nbsp; x = 2 (ریشه)
   </div>
-</section><!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
+</section> 
+<!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
 <section class="card" style="--c:#22d3ee">
   <div class="badge rise" style="--delay:.1s">۱۹</div>
   <h2 class="rise" style="--delay:.25s">اتحاد، همان تابع درجه دوم است</h2>
@@ -1565,61 +1565,57 @@
     <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
       <!-- شبکه -->
       <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-        <line x1="90"  y1="40" x2="90"  y2="260"/>
-        <line x1="140" y1="40" x2="140" y2="260"/>
-        <line x1="190" y1="40" x2="190" y2="260"/>
-        <line x1="240" y1="40" x2="240" y2="260"/>
-        <line x1="290" y1="40" x2="290" y2="260"/>
-        <line x1="340" y1="40" x2="340" y2="260"/>
+        <line x1="90"  y1="40" x2="90"  y2="240"/>
+        <line x1="140" y1="40" x2="140" y2="240"/>
+        <line x1="190" y1="40" x2="190" y2="240"/>
+        <line x1="240" y1="40" x2="240" y2="240"/>
+        <line x1="290" y1="40" x2="290" y2="240"/>
+        <line x1="340" y1="40" x2="340" y2="240"/>
         <line x1="50"  y1="60"  x2="410" y2="60"/>
         <line x1="50"  y1="100" x2="410" y2="100"/>
         <line x1="50"  y1="140" x2="410" y2="140"/>
         <line x1="50"  y1="180" x2="410" y2="180"/>
       </g>
 
-      <!-- محورها: محور xها روی y = 230 -->
-      <line x1="50" y1="230" x2="425" y2="230" stroke="#7dd3fc" stroke-width="2"/>
+      <!-- محورها: محور xها روی y = 120 (پایین صفحه) -->
+      <line x1="50" y1="120" x2="425" y2="120" stroke="#7dd3fc" stroke-width="2"/>
       <line x1="50" y1="260" x2="50"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
-      <polygon points="425,230 415,225 415,235" fill="#7dd3fc"/>
+      <polygon points="425,120 415,115 415,125" fill="#7dd3fc"/>
       <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
-      <text x="417" y="248" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+      <text x="417" y="138" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
       <text x="30"  y="30"  fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
 
-      <!-- برچسب‌های محور x: ۱→90، ۲→140، ۳→190، ۴→240، ۵→290 -->
+      <!-- برچسب‌های محور x -->
       <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-        <text x="90"  y="248">۱</text>
-        <text x="140" y="248">۲</text>
-        <text x="190" y="248">۳</text>
-        <text x="240" y="248">۴</text>
-        <text x="290" y="248">۵</text>
+        <text x="90"  y="138">۱</text>
+        <text x="140" y="138">۲</text>
+        <text x="190" y="138">۳</text>
+        <text x="240" y="138">۴</text>
+        <text x="290" y="138">۵</text>
       </g>
 
-      <!-- سهمی y = x² − 5x + 6 :
-           ریشه‌ها: x=2 → 140 ، x=3 → 190 روی محور (y=230)
-           قله در x=2.5 → 165، y قله = −0.25 (کمی زیر محور)
-           چون y منفی است، قله را زیر محور می‌گذاریم: 230 + 0.25*80 = 250
-           سه قطعه برای زیبایی: راست، قله، چپ -->
+      <!-- سهمی y = x² − 5x + 6 : رو به بالا
+           ریشه‌ها: x=2 → (140,120) ، x=3 → (190,120)
+           قله در x=2.5 → (165, ?) ، y = −0.25 (کمی پایین‌تر از محور)
+           با ضریب عمودی 80 پیکسل: قله در 120 + 0.25*80 = 140 (پایین محور)
+           دو سر سهمی باید بالا برود:
+           x=0.5 → y = 0.25+... محاسبه ساده: x=1 → y=2 → (90, 120-2*80=-40) خارج
+           پس فقط از x=1.5 تا x=3.5 می‌کشیم که در کادر جا شود. -->
       <path class="draw" style="--delay:1.0s"
-            d="M 40 20 Q 90 230 140 230"
-            fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-      <path class="draw" style="--delay:1.1s"
-            d="M 140 230 Q 165 250 190 230"
-            fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-      <path class="draw" style="--delay:1.2s"
-            d="M 190 230 Q 240 230 290 20"
+            d="M 65 20 Q 140 140 165 140 Q 190 140 265 20"
             fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
 
-      <!-- ریشه ۱: x=2 روی (140,230) -->
-      <circle class="pt" style="--delay:1.6s" cx="140" cy="230" r="10"
+      <!-- ریشه ۱: x=2 روی (140,120) -->
+      <circle class="pt" style="--delay:1.6s" cx="140" cy="120" r="10"
               fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-      <!-- ریشه ۲: x=3 روی (190,230) -->
-      <circle class="pt" style="--delay:1.8s" cx="190" cy="230" r="10"
+      <!-- ریشه ۲: x=3 روی (190,120) -->
+      <circle class="pt" style="--delay:1.8s" cx="190" cy="120" r="10"
               fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
 
-      <text class="pt" style="--delay:2.1s" x="140" y="270"
+      <text class="pt" style="--delay:2.1s" x="140" y="158"
             fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle"
             font-family="Vazirmatn, sans-serif">ریشه ۱</text>
-      <text class="pt" style="--delay:2.1s" x="190" y="270"
+      <text class="pt" style="--delay:2.1s" x="190" y="158"
             fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle"
             font-family="Vazirmatn, sans-serif">ریشه ۲</text>
     </svg>
