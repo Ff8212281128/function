@@ -2458,15 +2458,15 @@ const video       = document.getElementById('introVideo');
 const playOverlay = document.getElementById('playOverlay');
 const okBtn       = document.getElementById('okBtn');
 const intro       = document.getElementById('intro');
-const page1       = document.getElementById('page1');
-const page2       = document.getElementById('page2');
-const page3       = document.getElementById('page3');
+const page1 = document.getElementById('page1');
+const page2 = document.getElementById('page2');
+const page3 = document.getElementById('page3');
 const page4 = document.getElementById('page4');
 const page5 = document.getElementById('page5');
 const page6 = document.getElementById('page6');
 const page7 = document.getElementById('page7');
 const page8 = document.getElementById('page8');
- const scrollHint  = document.getElementById('scrollHint');
+const scrollHint = document.getElementById('scrollHint');
 
 /* ============================================================
    ۳) پخش ویدیو
@@ -2485,7 +2485,7 @@ playOverlay.addEventListener('click', () => {
 });
 
 /* ============================================================
-   ۴) Observerها
+   ۴) Observerها برای نمایش کارت‌ها
    ============================================================ */
 const cardObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -2506,7 +2506,7 @@ const endObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.35 });
 
 /* ============================================================
-   ۵) نمایش کارت‌ها
+   ۵) توابع کمکی نمایش
    ============================================================ */
 function revealInView(root){
   if (!root) return;
@@ -2560,22 +2560,19 @@ function activatePage(page){
   showScrollHint();
 }
 
-/* ============================================================
-   ۶) راهنمای اسکرول
-   ============================================================ */
-let hintTimer = null;
 function showScrollHint(){
+  if (!scrollHint) return;
   scrollHint.classList.add('show');
-  clearTimeout(hintTimer);
-  hintTimer = setTimeout(() => scrollHint.classList.remove('show'), 5000);
+  clearTimeout(window.__hintTimer);
+  window.__hintTimer = setTimeout(() => scrollHint.classList.remove('show'), 5000);
 }
 
 addEventListener('scroll', () => {
-  if (scrollY > 120) scrollHint.classList.remove('show');
+  if (scrollHint && scrollY > 120) scrollHint.classList.remove('show');
 }, { passive: true });
 
 /* ============================================================
-   ۷) سوییچ بین صفحه‌ها
+   ۶) سوییچ بین صفحه‌ها
    ============================================================ */
 function switchPage(fromEl, toEl){
   if (fromEl) fromEl.classList.remove('active');
@@ -2583,7 +2580,7 @@ function switchPage(fromEl, toEl){
 }
 
 /* ============================================================
-   ۸) رویدادها
+   ۷) رویدادها
    ============================================================ */
 okBtn.addEventListener('click', () => {
   try { video.pause(); } catch(e){}
@@ -2593,33 +2590,15 @@ okBtn.addEventListener('click', () => {
 });
 
 document.getElementById('toPage2').addEventListener('click', () => switchPage(page1, page2));
-
 document.getElementById('toPage3').addEventListener('click', () => switchPage(page2, page3));
+document.getElementById('toPage4').addEventListener('click', () => switchPage(page3, page4));
+document.getElementById('toPage5').addEventListener('click', () => switchPage(page4, page5));
+document.getElementById('toPage6').addEventListener('click', () => switchPage(page5, page6));
+document.getElementById('toPage7').addEventListener('click', () => switchPage(page6, page7));
+document.getElementById('toPage8').addEventListener('click', () => switchPage(page7, page8));
 
-document.getElementById('toPage4').addEventListener('click', () => {
-  switchPage(page3, page4);
-});
-
-document.getElementById('toPage5').addEventListener('click', () => {
-  switchPage(page4, page5);
-});
-
-document.getElementById('toPage6').addEventListener('click', () => {
-  switchPage(page5, page6);
-});
-
-
-document.getElementById('toPage7').addEventListener('click', () => {
-  switchPage(page6, page7);
-});
-document.getElementById('toPage8').addEventListener('click', () => {
-  switchPage(page7, page8);
-});
-
-document.getElementById('restatBtn').addEventListener('click', () => {
-  // برگشت به صفحه اول 
-   switchPage(page8,page1);
-});
+document.getElementById('restartBtn').addEventListener('click', () => {
+  switchPage(page8, page1);
 });
 </script>
 </body>
