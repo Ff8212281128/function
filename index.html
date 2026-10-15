@@ -1498,14 +1498,14 @@
 
   <div class="coord-box rise" style="--delay:.7s">
     <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
-      <!-- شبکه -->
+      <!-- شبکه: خطوط افقی و عمودی هر ۵۰ و ۲۰ پیکسل -->
       <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-        <line x1="90"  y1="40" x2="90"  y2="260"/>
-        <line x1="140" y1="40" x2="140" y2="260"/>
-        <line x1="190" y1="40" x2="190" y2="260"/>
-        <line x1="240" y1="40" x2="240" y2="260"/>
-        <line x1="290" y1="40" x2="290" y2="260"/>
-        <line x1="340" y1="40" x2="340" y2="260"/>
+        <line x1="100" y1="40" x2="100" y2="260"/>
+        <line x1="150" y1="40" x2="150" y2="260"/>
+        <line x1="200" y1="40" x2="200" y2="260"/>
+        <line x1="250" y1="40" x2="250" y2="260"/>
+        <line x1="300" y1="40" x2="300" y2="260"/>
+        <line x1="350" y1="40" x2="350" y2="260"/>
         <line x1="50"  y1="60"  x2="410" y2="60"/>
         <line x1="50"  y1="100" x2="410" y2="100"/>
         <line x1="50"  y1="140" x2="410" y2="140"/>
@@ -1522,28 +1522,29 @@
       <text x="417" y="218" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
       <text x="30"  y="30"  fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
 
-      <!-- برچسب‌های محور x -->
+      <!-- برچسب‌های محور x: مبدأ روی 50، هر واحد 50 پیکسل
+           ۱→100 ، ۲→150 ، ۳→200 ، ۴→250 ، ۵→300 -->
       <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-        <text x="90"  y="218">۱</text>
-        <text x="140" y="218">۲</text>
-        <text x="190" y="218">۳</text>
-        <text x="240" y="218">۴</text>
-        <text x="290" y="218">۵</text>
+        <text x="100" y="218">۱</text>
+        <text x="150" y="218">۲</text>
+        <text x="200" y="218">۳</text>
+        <text x="250" y="218">۴</text>
+        <text x="300" y="218">۵</text>
       </g>
 
-      <!-- خط y = 2x − 4 : یک خط واحد، بدون شکستگی
-           x=0  → y=−4 → (50, 280)
-           x=5  → y=6  → (290, 80)
-           شیب درست: ۲ واحد عمودی به ازای هر ۱ واحد افقی
-           ضریب عمودی ۲۰ پیکسل برای هر واحد -->
+      <!-- خط y = 2x − 4 : یک خط واحد
+           x=0 → y=−4 → (50, 280)
+           x=5 → y=6  → (300, 80)
+           ریشه: x=2 → (150, 200)
+           شیب دقیقاً ۲ ✓ -->
       <line class="draw" style="--delay:1.0s"
-            x1="50" y1="280" x2="290" y2="80"
+            x1="50" y1="280" x2="300" y2="80"
             stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
 
-      <!-- ریشه در x = 2 → روی خط در (140, 200) -->
-      <circle class="pt" style="--delay:1.6s" cx="140" cy="200" r="10"
+      <!-- ریشه در x = 2 روی (150, 200) -->
+      <circle class="pt" style="--delay:1.6s" cx="150" cy="200" r="10"
               fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-      <text class="pt" style="--delay:1.9s" x="140" y="240"
+      <text class="pt" style="--delay:1.9s" x="150" y="240"
             fill="#fecaca" font-size="14" font-weight="700" text-anchor="middle"
             font-family="Vazirmatn, sans-serif">ریشه (x = 2)</text>
     </svg>
@@ -1552,8 +1553,7 @@
   <div class="rule rise" style="--delay:2.2s">
     y = 2x − 4 &nbsp;→&nbsp; حل معادله: 2x − 4 = 0 &nbsp;→&nbsp; x = 2 (ریشه)
   </div>
-</section> 
-<!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
+</section><!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
 <section class="card" style="--c:#22d3ee">
   <div class="badge rise" style="--delay:.1s">۱۹</div>
   <h2 class="rise" style="--delay:.25s">اتحاد، همان تابع درجه دوم است</h2>
