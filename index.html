@@ -2178,73 +2178,89 @@
     </p>
 
     <div class="coord-box rise" style="--delay:.7s">
-      <svg class="coord" viewBox="0 0 460 320" xmlns="http://www.w3.org/2000/svg">
-        <!-- شبکه -->
-        <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-          <line x1="80"  y1="20" x2="80"  y2="300"/>
-          <line x1="140" y1="20" x2="140" y2="300"/>
-          <line x1="200" y1="20" x2="200" y2="300"/>
-          <line x1="260" y1="20" x2="260" y2="300"/>
-          <line x1="320" y1="20" x2="320" y2="300"/>
-          <line x1="380" y1="20" x2="380" y2="300"/>
-          <line x1="40" y1="60"  x2="420" y2="60"/>
-          <line x1="40" y1="120" x2="420" y2="120"/>
-          <line x1="40" y1="180" x2="420" y2="180"/>
-          <line x1="40" y1="240" x2="420" y2="240"/>
-        </g>
+  <svg class="coord" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+    <!-- شبکه: خطوط عمودی در x=1..4 و افقی در y=1..4 -->
+    <!-- مبدأ (0,0) روی (60, 260) ؛ هر واحد ۶۰ پیکسل -->
+    <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+      <line x1="120" y1="30" x2="120" y2="260"/>
+      <line x1="180" y1="30" x2="180" y2="260"/>
+      <line x1="240" y1="30" x2="240" y2="260"/>
+      <line x1="300" y1="30" x2="300" y2="260"/>
+      <line x1="60"  y1="200" x2="380" y2="200"/>
+      <line x1="60"  y1="140" x2="380" y2="140"/>
+      <line x1="60"  y1="80"  x2="380" y2="80"/>
+      <line x1="60"  y1="20"  x2="380" y2="20"/>
+    </g>
 
-        <!-- محورها: x=0 روی 40، هر واحد 60 پیکسل؛ محور xها روی y=260 -->
-        <line x1="40" y1="260" x2="435" y2="260" stroke="#7dd3fc" stroke-width="2"/>
-        <line x1="40" y1="300" x2="40"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
-        <polygon points="435,260 425,255 425,265" fill="#7dd3fc"/>
-        <polygon points="40,22 35,32 45,32" fill="#7dd3fc"/>
-        <text x="428" y="278" fill="#7dd3fc" font-size="13">x</text>
-        <text x="20"  y="30"  fill="#7dd3fc" font-size="13">y</text>
+    <!-- محورها -->
+    <line x1="30" y1="260" x2="390" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+    <line x1="60" y1="290" x2="60"  y2="20"  stroke="#7dd3fc" stroke-width="2"/>
+    <polygon points="390,260 380,255 380,265" fill="#7dd3fc"/>
+    <polygon points="60,20 55,30 65,30" fill="#7dd3fc"/>
+    <text x="382" y="278" fill="#7dd3fc" font-size="13">x</text>
+    <text x="42"  y="32"  fill="#7dd3fc" font-size="13">y</text>
 
-        <!-- خط y = x: از (0,0) به بالا-راست -->
-        <!-- در SVG: از (40,260) تا (380,40) که برابر با خط y=x در مقیاس ۶۰ پیکسل است -->
-        <line class="draw" style="--delay:.8s"
-              x1="40" y1="260" x2="400" y2="30"
-              stroke="#a5b4fc" stroke-width="2"
-              stroke-dasharray="6 4" opacity="0.75"/>
-        <text class="pt" style="--delay:1.4s" x="350" y="42"
-              fill="#a5b4fc" font-size="13" font-weight="700">y = x</text>
+    <!-- برچسب‌های محور -->
+    <g fill="#8ba7d6" font-size="11" text-anchor="middle">
+      <text x="120" y="278">۱</text>
+      <text x="180" y="278">۲</text>
+      <text x="240" y="278">۳</text>
+      <text x="300" y="278">۴</text>
+    </g>
+    <g fill="#8ba7d6" font-size="11" text-anchor="end">
+      <text x="52" y="204">۱</text>
+      <text x="52" y="144">۲</text>
+      <text x="52" y="84">۳</text>
+      <text x="52" y="24">۴</text>
+    </g>
 
-        <!-- نمودار اصلی: تابع نمایی 2ˣ از x=0 تا x=3
-             x=0 → y=1 → (40, 200)
-             x=1 → y=2 → (100, 140)
-             x=2 → y=4 → (160, 20) خارج، پس تا 1.5
-             x=1.5 → y≈2.83 → (130, 90) -->
-        <path class="draw" style="--delay:1.2s"
-              d="M 40 200 Q 70 175 90 145 Q 120 100 140 40"
-              fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+    <!-- خط y = x: از (0,0) یعنی (60,260) تا (4,4) یعنی (300,20) -->
+    <line class="draw" style="--delay:.8s"
+          x1="60" y1="260" x2="300" y2="20"
+          stroke="#a5b4fc" stroke-width="2"
+          stroke-dasharray="6 4" opacity="0.85"/>
+    <text class="pt" style="--delay:1.4s" x="310" y="34"
+          fill="#a5b4fc" font-size="13" font-weight="700">y = x</text>
 
-        <!-- نمودار قرینه (لگاریتم): قرینه‌ی همان منحنی نسبت به y=x
-             نقطه‌ها قرینه می‌شوند: (y,x) -->
-        <path class="draw" style="--delay:1.4s"
-              d="M 200 260 Q 175 230 145 210 Q 100 180 40 140"
-              fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round"/>
+    <!-- نمودار نمایی 2^x (آبی روشن):
+         x=0 → y=1 → (60, 200)
+         x=1 → y=2 → (120, 140)
+         x=2 → y=4 → (180, 20)  ← خیلی بالاست، تا x=1.7 نمایش می‌دهیم
+         x=1.7 → y≈3.25 → (162, 65) -->
+    <path class="draw" style="--delay:1.2s"
+          d="M 50 210 Q 80 190 100 165 Q 130 110 165 60"
+          fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
 
-        <!-- نقاط متناظر:
-             نمودار اصلی: نقطه (1, 2) → (100, 140)
-             نمودار قرینه: نقطه (2, 1) → (160, 200)
-             نقطه‌ی وسط: (0,1) → (40,200) و (1,0) → (100,260) -->
-        <circle class="pt" style="--delay:1.8s" cx="100" cy="140" r="6" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
-        <circle class="pt" style="--delay:2.0s" cx="160" cy="200" r="6" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+    <!-- نمودار لگاریتمی (سبزآبی): قرینه‌ی منحنی بالا نسبت به y=x
+         قرینه‌ی هر نقطه (x, y) می‌شود (y, x):
+         (0,1) → (1,0) → (120, 260)
+         (1,2) → (2,1) → (180, 200)
+         (1.7, 3.25) → (3.25, 1.7) → (255, 158) ... کمی خارج از قوس فعلی
+         قوس اصلی: از (1,0) تا نزدیک (3,2) -->
+    <path class="draw" style="--delay:1.4s"
+          d="M 100 260 Q 120 235 140 215 Q 175 180 235 145"
+          fill="none" stroke="#2dd4bf" stroke-width="3" stroke-linecap="round"/>
 
-        <!-- خط‌چین اتصال دو نقطه‌ی متناظر (عمود بر y=x) -->
-        <line class="draw" style="--delay:2.2s"
-              x1="100" y1="140" x2="160" y2="200"
-              stroke="#facc15" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.7"/>
+    <!-- نقاط متناظر (a,b) و (b,a):
+         نقطه‌ی اول: (1, 2) → (120, 140)  روی نمودار آبی
+         نقطه‌ی دوم: (2, 1) → (180, 200)  روی نمودار سبز -->
+    <circle class="pt" style="--delay:1.8s" cx="120" cy="140" r="7"
+            fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+    <circle class="pt" style="--delay:2.0s" cx="180" cy="200" r="7"
+            fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
 
-        <!-- برچسب‌ها -->
-        <text class="pt" style="--delay:2.4s" x="100" y="128"
-              fill="#a5f3fc" font-size="11" font-weight="700" text-anchor="middle">(a, b)</text>
-        <text class="pt" style="--delay:2.4s" x="168" y="218"
-              fill="#99f6e4" font-size="11" font-weight="700" text-anchor="middle">(b, a)</text>
-      </svg>
-    </div>
+    <!-- خط‌چین زرد اتصال دو نقطه -->
+    <line class="draw" style="--delay:2.2s"
+          x1="120" y1="140" x2="180" y2="200"
+          stroke="#facc15" stroke-width="1.5" stroke-dasharray="3 3" opacity="0.75"/>
 
+    <!-- برچسب‌ها -->
+    <text class="pt" style="--delay:2.4s" x="120" y="128"
+          fill="#a5f3fc" font-size="12" font-weight="700" text-anchor="middle">(a, b)</text>
+    <text class="pt" style="--delay:2.4s" x="180" y="222"
+          fill="#99f6e4" font-size="12" font-weight="700" text-anchor="middle">(b, a)</text>
+  </svg>
+</div>
     <div class="rule rise" style="--delay:2.6s">
       هر نقطه <span style="direction:ltr;display:inline-block">(a, b)</span> روی نمودار اصلی، به نقطه <span style="direction:ltr;display:inline-block">(b, a)</span> روی نمودار قرینه منتقل می‌شود.
     </div>
