@@ -1527,9 +1527,9 @@
         <line class="draw" style="--delay:1.0s" x1="80" y1="240" x2="380" y2="40"
               stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
 
-        <circle class="pt" style="--delay:1.6s" cx="220" cy="180" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-        <text class="pt" style="--delay:1.9s" x="220" y="222" fill="#fecaca" font-size="14" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه (x = 2)</text>
-      </svg>
+        <circle class="pt" style="--delay:1.6s" cx="280" cy="180" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+<text class="pt" style="--delay:1.9s" x="280" y="222" fill="#fecaca" font-size="14" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه (x = 2)</text>
+      </svg
     </div>
 
     <div class="rule rise" style="--delay:2.2s">
@@ -1575,15 +1575,46 @@
           <text x="290" y="258">۵</text>
         </g>
 
-        <path class="draw" style="--delay:1.0s"
-              d="M 90 240 Q 190 -20 290 240"
-              fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+  <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+    <line x1="90" y1="20" x2="90" y2="260"/>
+    <line x1="140" y1="20" x2="140" y2="260"/>
+    <line x1="190" y1="20" x2="190" y2="260"/>
+    <line x1="240" y1="20" x2="240" y2="260"/>
+    <line x1="290" y1="20" x2="290" y2="260"/>
+    <line x1="340" y1="20" x2="340" y2="260"/>
+    <line x1="50" y1="220" x2="410" y2="220"/>
+    <line x1="50" y1="180" x2="410" y2="180"/>
+    <line x1="50" y1="140" x2="410" y2="140"/>
+    <line x1="50" y1="100" x2="410" y2="100"/>
+    <line x1="50" y1="60"  x2="410" y2="60"/>
+  </g>
+  <line x1="50" y1="240" x2="425" y2="240" stroke="#7dd3fc" stroke-width="2"/>
+  <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+  <polygon points="425,240 415,235 415,245" fill="#7dd3fc"/>
+  <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+  <text x="417" y="258" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+  <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
 
-        <circle class="pt" style="--delay:1.6s" cx="140" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-        <circle class="pt" style="--delay:1.8s" cx="240" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-        <text class="pt" style="--delay:2.1s" x="140" y="222" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۱</text>
-        <text class="pt" style="--delay:2.1s" x="240" y="222" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۲</text>
-      </svg>
+  <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+    <text x="90" y="258">۱</text>
+    <text x="140" y="258">۲</text>
+    <text x="190" y="258">۳</text>
+    <text x="240" y="258">۴</text>
+    <text x="290" y="258">۵</text>
+  </g>
+
+  <!-- سهمی: از x=0 تا x=5 روی محور، قله در x=2.5 -->
+  <path class="draw" style="--delay:1.0s"
+        d="M 90 240 Q 190 -20 290 240"
+        fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- ریشه‌ها -->
+  <circle class="pt" style="--delay:1.6s" cx="140" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+  <circle class="pt" style="--delay:1.8s" cx="190" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+  <text class="pt" style="--delay:2.1s" x="140" y="222" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۱</text>
+  <text class="pt" style="--delay:2.1s" x="190" y="222" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۲</text>
+</svg>
     </div>
 
     <div class="rule rise" style="--delay:2.4s">
