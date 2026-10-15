@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>از الگو تا تابع — سفر یک مفهوم</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --indigo:#6366f1;
+    --blue:#4f7df9;
+    --cyan:#22d3ee;
+    --teal:#2dd4bf;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Vazirmatn',Tahoma,sans-serif;
+    background:#04050d;
+    color:#e8eefc;
+    overflow-x:hidden;
+    line-height:1.9;
+  }
+  body.locked{overflow:hidden}
+
+  #stars{
+    position:fixed;inset:0;width:100%;height:100%;
+    z-index:0;display:block;
+  }
+  .nebula{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(900px 620px at 82% 8%,  rgba(99,102,241,.22), transparent 62%),
+      radial-gradient(760px 520px at 8% 38%,  rgba(34,211,238,.14), transparent 62%),
+      radial-gradient(900px 700px at 55% 96%, rgba(45,212,191,.13), transparent 62%),
+      radial-gradient(600px 400px at 30% 70%, rgba(168,85,247,.10), transparent 65%);
+  }
+
+  #intro{
+    position:fixed;inset:0;z-index:50;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:26px;padding:22px;
+    background:radial-gradient(circle at 50% 38%, #0c1233 0%, #05060f 62%, #030409 100%);
+    transition:opacity .9s ease, visibility .9s ease;
+  }
+  #intro.hidden{opacity:0;visibility:hidden;pointer-events:none}
+
+  .video-wrap{
+    position:relative;width:min(880px,92vw);
+    border-radius:20px;overflow:hidden;
+    border:1px solid rgba(130,170,255,.35);
+    box-shadow:0 0 70px rgba(80,120,255,.35), 0 0 140px rgba(45,212,191,.12);
+    background:#000;
+  }
+  .video-wrap video{display:block;width:100%;height:auto;background:#000}
+
+  .play-overlay{
+    position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    background:rgba(2,4,12,.55);border:none;cursor:pointer;
+    transition:opacity .35s ease;
+  }
+  .play-overlay.hide{opacity:0;pointer-events:none}
+  .play-overlay span{
+    width:88px;height:88px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    padding-right:6px;
+    font-size:2.2rem;color:#eaf2ff;
+    background:linear-gradient(135deg,rgba(99,102,241,.95),rgba(45,212,191,.9));
+    box-shadow:0 0 40px rgba(99,102,241,.85);
+  }
+
+  .btn{
+    font-family:inherit;font-size:1.05rem;font-weight:700;color:#f0f5ff;
+    padding:14px 52px;border-radius:999px;cursor:pointer;
+    background:linear-gradient(135deg,rgba(99,102,241,.92),rgba(45,212,191,.88));
+    border:1px solid rgba(180,220,255,.5);
+    box-shadow:0 0 34px rgba(99,102,241,.6), inset 0 0 22px rgba(255,255,255,.14);
+    transition:transform .22s ease, box-shadow .22s ease;
+    letter-spacing:.5px;
+  }
+  .btn:hover{transform:translateY(-2px) scale(1.03);box-shadow:0 0 55px rgba(99,102,241,.95), inset 0 0 22px rgba(255,255,255,.2)}
+  .btn:active{transform:scale(.98)}
+
+  #okBtn{animation:okGlow 2.4s ease-in-out infinite}
+  @keyframes okGlow{
+    0%,100%{box-shadow:0 0 30px rgba(99,102,241,.55), inset 0 0 22px rgba(255,255,255,.14)}
+    50%    {box-shadow:0 0 60px rgba(45,212,191,.8), inset 0 0 22px rgba(255,255,255,.22)}
+  }
+
+  .page{
+    position:relative;z-index:2;
+    display:none;
+    flex-direction:column;align-items:center;
+    gap:90px;
+    padding:90px 18px 140px;
+    min-height:100vh;
+  }
+  .page.active{
+    display:flex;
+    animation:pageFade 1s ease forwards;
+  }
+  @keyframes pageFade{
+    from{opacity:0}
+    to{opacity:1}
+  }
+
+  .card{
+    position:relative;
+    width:min(940px,94vw);
+    border-radius:26px;
+    padding:34px 30px 36px;
+    background:linear-gradient(160deg, rgba(18,24,58,.88), rgba(6,10,26,.9));
+    border:1.5px solid var(--c);
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.045),
+      0 0 55px -8px var(--c),
+      0 24px 60px -30px rgba(0,0,0,.9),
+      inset 0 0 90px -50px var(--c);
+    backdrop-filter:blur(7px);
+    opacity:0;
+    transform:translateY(60px) scale(.965);
+    transition:opacity 1s cubic-bezier(.2,.8,.2,1), transform 1s cubic-bezier(.2,.8,.2,1);
+  }
+  .card.visible{opacity:1;transform:none}
+
+  .card::before{
+    content:'';position:absolute;inset:-1.5px;border-radius:26px;
+    background:linear-gradient(140deg, var(--c), transparent 45%, transparent 55%, var(--c));
+    opacity:.28;filter:blur(10px);z-index:-1;
+  }
+
+  .badge{
+    position:absolute;top:-22px;right:30px;
+    width:52px;height:52px;border-radius:16px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;font-weight:900;color:#fff;
+    background:linear-gradient(140deg, var(--c), rgba(8,12,30,.95));
+    border:1.5px solid var(--c);
+    box-shadow:0 0 28px -2px var(--c);
+  }
+
+  .card h2{
+    font-size:1.5rem;font-weight:800;
+    color:#fff;margin-bottom:10px;
+    text-shadow:0 0 26px var(--c);
+  }
+  .card p.lead{
+    font-size:1.08rem;color:#c9d8f5;font-weight:400;
+    margin-bottom:26px;
+  }
+  .accent{color:var(--c);font-weight:700}
+
+  .rise{opacity:0}
+  .card.visible .rise{
+    animation:riseIn .75s cubic-bezier(.2,.8,.2,1) forwards;
+    animation-delay:var(--delay,0s);
+  }
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(20px)}
+    to{opacity:1;transform:none}
+  }
+
+  .pattern{
+    display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+    gap:16px;padding:26px 10px;
+    background:rgba(8,14,36,.55);
+    border-radius:18px;border:1px solid rgba(120,160,255,.14);
+    direction:ltr;
+  }
+  .shape{width:46px;height:46px;flex:0 0 auto}
+  .circle{
+    border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, #c4f5ff, #22d3ee 58%, #0e7490);
+    box-shadow:0 0 20px rgba(34,211,238,.7);
+  }
+  .tri{
+    background:linear-gradient(180deg,#dfe4ff,#818cf8 55%,#4f46e5);
+    clip-path:polygon(50% 3%, 97% 97%, 3% 97%);
+    filter:drop-shadow(0 0 12px rgba(129,140,248,.85));
+  }
+  .sq{
+    border-radius:11px;
+    background:linear-gradient(150deg,#c9fff2,#2dd4bf 58%,#0f766e);
+    box-shadow:0 0 20px rgba(45,212,191,.65);
+  }
+  .qmark{
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.7rem;font-weight:900;color:#9fb4e0;
+    border:2px dashed rgba(140,175,255,.5);border-radius:12px;
+    animation:blinkQ 1.6s ease-in-out infinite;
+  }
+  @keyframes blinkQ{0%,100%{opacity:.35}50%{opacity:1}}
+  .pattern-caption{
+    margin-top:18px;text-align:center;font-size:.98rem;color:#9db1d8;
+  }
+
+  .table-box{
+    background:rgba(8,14,36,.55);
+    border:1px solid rgba(120,160,255,.16);
+    border-radius:18px;
+    padding:22px 18px;
+    overflow-x:auto;
+  }
+  .trow{display:flex;align-items:center;gap:14px;padding:10px 4px}
+  .trow + .trow{border-top:1px dashed rgba(120,160,255,.18)}
+  .tlabel{
+    min-width:150px;text-align:right;
+    font-size:.98rem;font-weight:600;color:#a8bde6;
+  }
+  .tcells{display:flex;direction:ltr;gap:10px;flex:1}
+  .tcells span{
+    width:74px;height:52px;flex:0 0 auto;
+    display:flex;align-items:center;justify-content:center;
+    border-radius:12px;font-size:1.15rem;font-weight:700;
+    background:rgba(99,102,241,.14);
+    border:1px solid rgba(120,160,255,.28);
+    color:#dfe9ff;
+  }
+  .trow.out .tcells span{
+    background:rgba(34,211,238,.13);
+    border-color:rgba(34,211,238,.4);
+    color:#b9f6ff;
+    box-shadow:0 0 18px -4px rgba(34,211,238,.8);
+  }
+  .rule{
+    margin-top:22px;text-align:center;font-size:1.1rem;font-weight:700;
+    color:#eaf3ff;
+    padding:14px;border-radius:14px;
+    background:linear-gradient(90deg, rgba(99,102,241,.18), rgba(34,211,238,.18));
+    border:1px solid rgba(120,180,255,.3);
+  }
+
+  .pairs{
+    display:flex;flex-wrap:wrap;gap:12px;justify-content:center;
+    margin-bottom:24px;direction:ltr;
+  }
+  .pair{
+    padding:9px 18px;border-radius:12px;font-weight:700;font-size:1.05rem;
+    background:rgba(34,211,238,.12);
+    border:1px solid rgba(34,211,238,.45);
+    color:#bff4ff;
+    box-shadow:0 0 22px -6px rgba(34,211,238,.9);
+  }
+  .coord-box{
+    background:rgba(8,14,36,.6);
+    border:1px solid rgba(120,160,255,.16);
+    border-radius:18px;padding:12px;
+  }
+  svg.coord{width:100%;height:auto;display:block;direction:ltr}
+
+  .pt{opacity:0;transform-box:fill-box;transform-origin:center}
+  .card.visible .pt{
+    animation:popIn .55s cubic-bezier(.34,1.56,.64,1) forwards;
+    animation-delay:var(--delay,0s);
+  }
+  @keyframes popIn{
+    from{opacity:0;transform:scale(0)}
+    to{opacity:1;transform:scale(1)}
+  }
+
+  .draw{stroke-dasharray:280;stroke-dashoffset:280}
+  .card.visible .draw{
+    animation:drawLine .85s ease forwards;
+    animation-delay:var(--delay,0s);
+  }
+  @keyframes drawLine{to{stroke-dashoffset:0}}
+
+  svg.venn{width:100%;height:auto;display:block;direction:ltr}
+
+  .definition{
+    background:rgba(99,102,241,.10);
+    border:1.5px solid rgba(129,140,248,.45);
+    border-radius:16px;
+    padding:22px 24px;
+    font-size:1.12rem;
+    line-height:2.1;
+    color:#dbe4ff;
+    box-shadow:0 0 35px -12px rgba(129,140,248,.9);
+    margin-top:6px;
+  }
+  .definition strong{color:#c7d2fe}
+
+  .formula-box{
+    text-align:center;
+    font-size:1.35rem;
+    font-weight:800;
+    letter-spacing:.4px;
+    color:#fff;
+    padding:16px 12px;
+    margin-bottom:22px;
+    border-radius:14px;
+    background:linear-gradient(90deg, rgba(99,102,241,.18), rgba(45,212,191,.18));
+    border:1px solid rgba(120,180,255,.35);
+    box-shadow:0 0 30px -8px rgba(120,180,255,.7);
+    direction:ltr;
+  }
+
+  .two-graphs{
+    display:flex;
+    flex-wrap:nowrap;
+    gap:14px;
+    direction:ltr;
+    margin-top:6px;
+  }
+  .graph-col{
+    flex:1 1 0;
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background:rgba(8,14,36,.6);
+    border:1px solid rgba(120,160,255,.18);
+    border-radius:14px;
+    padding:12px 8px 10px;
+    direction:rtl;
+  }
+  .graph-col .formula-small{
+    font-size:.92rem;
+    font-weight:700;
+    color:#e0e7ff;
+    margin-bottom:8px;
+    direction:ltr;
+    text-align:center;
+    padding:6px 10px;
+    border-radius:9px;
+    background:rgba(99,102,241,.14);
+    border:1px solid rgba(120,160,255,.28);
+    white-space:nowrap;
+  }
+  .graph-col svg{width:100%;height:auto;display:block}
+  .graph-caption{
+    margin-top:8px;
+    font-size:.9rem;
+    font-weight:700;
+    color:#cbd5e1;
+    text-align:center;
+    padding:5px 12px;
+    border-radius:9px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.09);
+  }
+
+  .end{
+    display:flex;flex-direction:column;align-items:center;gap:16px;
+    opacity:0;transform:translateY(30px);
+    transition:opacity .9s ease, transform .9s ease;
+  }
+  .end.show{opacity:1;transform:none}
+  .end-note{font-size:.95rem;color:#8fa4cc}
+
+  #scrollHint{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%);
+    z-index:20;font-size:.9rem;color:#8fa4cc;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+    opacity:0;transition:opacity .8s ease;pointer-events:none;
+  }
+  #scrollHint.show{opacity:1;animation:hintFloat 2.2s ease-in-out infinite}
+  @keyframes hintFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+  /* ===== استایل‌های صفحه سوم ===== */
+  .dialogue{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    margin-top:8px;
+  }
+  .bubble{
+    position:relative;
+    padding:16px 22px;
+    border-radius:18px;
+    font-size:1.08rem;
+    line-height:1.95;
+    max-width:92%;
+  }
+  .bubble.q{
+    background:linear-gradient(135deg, rgba(99,102,241,.16), rgba(99,102,241,.05));
+    border:1.5px solid rgba(129,140,248,.55);
+    color:#dbe4ff;
+    align-self:flex-start;
+    box-shadow:0 0 26px -12px rgba(129,140,248,.95);
+  }
+  .bubble.a{
+    background:linear-gradient(135deg, rgba(45,212,191,.16), rgba(45,212,191,.05));
+    border:1.5px solid rgba(45,212,191,.55);
+    color:#c7fff6;
+    align-self:flex-end;
+    box-shadow:0 0 26px -12px rgba(45,212,191,.95);
+  }
+  .bubble .tag{
+    display:inline-block;
+    font-size:.8rem;
+    font-weight:700;
+    padding:3px 12px;
+    border-radius:999px;
+    margin-left:10px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.14);
+  }
+  .big-q{
+    text-align:center;
+    font-size:1.25rem;
+    font-weight:800;
+    color:#fff;
+    padding:16px 14px;
+    margin-bottom:18px;
+    border-radius:14px;
+    background:linear-gradient(90deg, rgba(99,102,241,.20), rgba(45,212,191,.20));
+    border:1px solid rgba(140,200,255,.4);
+    box-shadow:0 0 30px -10px rgba(120,180,255,.85);
+  }
+
+  @media (max-width:640px){
+    .card{padding:28px 18px 30px;border-radius:20px}
+    .card h2{font-size:1.22rem}
+    .shape{width:36px;height:36px}
+    .tlabel{min-width:104px;font-size:.85rem}
+    .tcells span{width:54px;height:44px;font-size:1rem}
+    .btn{padding:12px 38px;font-size:1rem}
+    .page{gap:70px;padding:70px 12px 110px}
+    .formula-box{font-size:1.1rem;padding:12px 8px}
+    .definition{font-size:1rem;padding:18px 16px}
+    .graph-col .formula-small{font-size:.78rem;padding:5px 7px;white-space:normal}
+    .graph-caption{font-size:.8rem;padding:4px 8px}
+  }
+  /* ===== استایل‌های صفحه چهارم ===== */
+.methods{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.method{
+  background:rgba(8,14,36,.6);
+  border:1px solid rgba(120,160,255,.18);
+  border-radius:14px;
+  padding:18px 20px;
+}
+.method h3{
+  color:var(--c);
+  font-size:1.1rem;
+  margin-bottom:10px;
+  font-weight:800;
+  text-shadow:0 0 18px var(--c);
+}
+.method .example{
+  direction:ltr;
+  background:rgba(99,102,241,.10);
+  border:1px solid rgba(120,160,255,.22);
+  border-radius:10px;
+  padding:10px 14px;
+  margin-top:10px;
+  font-size:1rem;
+  font-weight:600;
+  color:#dbe4ff;
+  text-align:center;
+  line-height:2;
+}
+
+.examples-grid{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  justify-content:center;
+  margin-top:6px;
+}
+.examples-grid .ex{
+  padding:12px 20px;
+  border-radius:12px;
+  font-weight:700;
+  font-size:1.05rem;
+  direction:ltr;
+  background:rgba(99,102,241,.12);
+  border:1px solid rgba(129,140,248,.45);
+  color:#e0e7ff;
+  box-shadow:0 0 22px -8px rgba(129,140,248,.95);
+}
+
+.delta-cases{
+  display:flex;
+  flex-wrap:wrap;
+  gap:14px;
+  justify-content:center;
+  margin-top:8px;
+}
+.delta-case{
+  flex:1 1 200px;
+  min-width:180px;
+  background:rgba(8,14,36,.6);
+  border:1px solid rgba(120,160,255,.18);
+  border-radius:14px;
+  padding:14px 10px 12px;
+  text-align:center;
+}
+.delta-case svg{
+  width:100%;
+  height:auto;
+  max-width:230px;
+  margin:0 auto;
+  display:block;
+}
+.delta-case .label{
+  margin-top:10px;
+  font-size:1rem;
+  font-weight:800;
+  color:#e0e7ff;
+  direction:ltr;
+}
+.delta-case .sub{
+  font-size:.88rem;
+  color:#94a3c8;
+  margin-top:4px;
+}
+
+.final-note{
+  margin-top:22px;
+  text-align:center;
+  font-size:1.08rem;
+  font-weight:700;
+  color:#eaf3ff;
+  padding:16px;
+  border-radius:14px;
+  background:linear-gradient(90deg, rgba(99,102,241,.18), rgba(45,212,191,.18));
+  border:1px solid rgba(120,180,255,.35);
+  box-shadow:0 0 30px -10px rgba(120,180,255,.85);
+}
+</style>
+</head>
+<body class="locked">
+
+<canvas id="stars"></canvas>
+<div class="nebula"></div>
+
+<!-- ============ صفحه شروع ============ -->
+<div id="intro">
+  <div class="video-wrap">
+    <video id="introVideo" src="intro.mp4" playsinline preload="auto"></video>
+    <button id="playOverlay" class="play-overlay" aria-label="پخش ویدیو">
+      <span>▶</span>
+    </button>
+  </div>
+  <button id="okBtn" class="btn">OK</button>
+</div>
+
+<!-- ============ صفحه ۱ : کارت‌های ۱ تا ۴ ============ -->
+<main id="page1" class="page">
+
+  <section class="card" style="--c:#6366f1">
+    <div class="badge rise" style="--delay:.1s">۱</div>
+    <h2 class="rise" style="--delay:.25s">دوره اول ابتدایی</h2>
+    <p class="lead rise" style="--delay:.4s">
+      یاد گرفتی <span class="accent">جملات بعدی یک الگو</span> را بنویسی.
+    </p>
+
+    <div class="pattern">
+      <span class="shape circle rise" style="--delay:.65s"></span>
+      <span class="shape tri    rise" style="--delay:.9s"></span>
+      <span class="shape sq     rise" style="--delay:1.15s"></span>
+      <span class="shape circle rise" style="--delay:1.4s"></span>
+      <span class="shape tri    rise" style="--delay:1.65s"></span>
+      <span class="shape sq     rise" style="--delay:1.9s"></span>
+      <span class="shape circle rise" style="--delay:2.15s"></span>
+      <span class="shape tri    rise" style="--delay:2.4s"></span>
+      <span class="shape qmark  rise" style="--delay:2.75s">؟</span>
+    </div>
+
+    <p class="pattern-caption rise" style="--delay:3.1s">
+      دایره ← مثلث ← مربع ← دایره ← مثلث ← مربع ← دایره ← مثلث ← <span class="accent">…</span>
+    </p>
+  </section>
+
+  <section class="card" style="--c:#4f7df9">
+    <div class="badge rise" style="--delay:.1s">۲</div>
+    <h2 class="rise" style="--delay:.25s">دوره دوم ابتدایی</h2>
+    <p class="lead rise" style="--delay:.4s">
+      یاد گرفتی به هر جمله یک <span class="accent">شماره</span> بدهی و
+      <span class="accent">رابطه‌ی بین شماره شکل و جمله</span> را بنویسی.
+    </p>
+
+    <div class="table-box">
+      <div class="trow">
+        <div class="tlabel rise" style="--delay:.6s">شماره شکل (n)</div>
+        <div class="tcells">
+          <span class="rise" style="--delay:.7s">۱</span>
+          <span class="rise" style="--delay:.82s">۲</span>
+          <span class="rise" style="--delay:.94s">۳</span>
+          <span class="rise" style="--delay:1.06s">۴</span>
+          <span class="rise" style="--delay:1.18s">۵</span>
+        </div>
+      </div>
+      <div class="trow out">
+        <div class="tlabel rise" style="--delay:1.35s">تعداد مثلث‌ها</div>
+        <div class="tcells">
+          <span class="rise" style="--delay:1.45s">۳</span>
+          <span class="rise" style="--delay:1.57s">۵</span>
+          <span class="rise" style="--delay:1.69s">۷</span>
+          <span class="rise" style="--delay:1.81s">۹</span>
+          <span class="rise" style="--delay:1.93s">۱۱</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="rule rise" style="--delay:2.25s">
+      رابطه: تعداد مثلث‌ها = ۲ × شماره شکل + ۱
+    </div>
+  </section>
+
+  <section class="card" style="--c:#22d3ee">
+    <div class="badge rise" style="--delay:.1s">۳</div>
+    <h2 class="rise" style="--delay:.25s">دوره متوسطه اول</h2>
+    <p class="lead rise" style="--delay:.4s">
+      یاد گرفتی هر شماره شکل و جمله‌ی مربوط به آن را به‌صورت
+      <span class="accent">زوج‌مرتب</span> بنویسی و آن‌ها را روی
+      <span class="accent">دستگاه مختصات</span> نشان دهی.
+    </p>
+
+    <div class="pairs">
+      <span class="pair rise" style="--delay:.6s">(۱ , ۳)</span>
+      <span class="pair rise" style="--delay:.75s">(۲ , ۵)</span>
+      <span class="pair rise" style="--delay:.9s">(۳ , ۷)</span>
+      <span class="pair rise" style="--delay:1.05s">(۴ , ۹)</span>
+      <span class="pair rise" style="--delay:1.2s">(۵ , ۱۱)</span>
+    </div>
+
+    <div class="coord-box rise" style="--delay:1.4s">
+      <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(125,211,252,0.11)" stroke-width="1">
+          <line x1="110" y1="40" x2="110" y2="260"/>
+          <line x1="170" y1="40" x2="170" y2="260"/>
+          <line x1="230" y1="40" x2="230" y2="260"/>
+          <line x1="290" y1="40" x2="290" y2="260"/>
+          <line x1="350" y1="40" x2="350" y2="260"/>
+          <line x1="50" y1="60" x2="410" y2="60"/>
+          <line x1="50" y1="80" x2="410" y2="80"/>
+          <line x1="50" y1="100" x2="410" y2="100"/>
+          <line x1="50" y1="120" x2="410" y2="120"/>
+          <line x1="50" y1="140" x2="410" y2="140"/>
+          <line x1="50" y1="160" x2="410" y2="160"/>
+          <line x1="50" y1="180" x2="410" y2="180"/>
+          <line x1="50" y1="200" x2="410" y2="200"/>
+          <line x1="50" y1="220" x2="410" y2="220"/>
+          <line x1="50" y1="240" x2="410" y2="240"/>
+        </g>
+
+        <line x1="50" y1="260" x2="424" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+        <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+        <polygon points="424,260 414,255 414,265" fill="#7dd3fc"/>
+        <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+
+        <text x="418" y="278" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">n</text>
+        <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">a</text>
+
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+          <text x="110" y="278">۱</text>
+          <text x="170" y="278">۲</text>
+          <text x="230" y="278">۳</text>
+          <text x="290" y="278">۴</text>
+          <text x="350" y="278">۵</text>
+        </g>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+          <text x="42" y="244">۱</text>
+          <text x="42" y="204">۳</text>
+          <text x="42" y="164">۵</text>
+          <text x="42" y="124">۷</text>
+          <text x="42" y="84">۹</text>
+        </g>
+
+        <g>
+          <circle class="pt" style="--delay:1.7s"  cx="110" cy="240" r="7" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.9s"  cx="170" cy="200" r="7" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.1s"  cx="230" cy="160" r="7" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.3s"  cx="290" cy="120" r="7" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.5s"  cx="350" cy="80"  r="7" fill="#22d3ee" stroke="#e0fbff" stroke-width="2"/>
+        </g>
+
+        <g stroke="rgba(34,211,238,.28)" stroke-width="1" stroke-dasharray="4 4">
+          <line class="draw" style="--delay:1.75s" x1="110" y1="240" x2="110" y2="260"/>
+          <line class="draw" style="--delay:1.75s" x1="50"  y1="240" x2="110" y2="240"/>
+          <line class="draw" style="--delay:1.95s" x1="170" y1="200" x2="170" y2="260"/>
+          <line class="draw" style="--delay:1.95s" x1="50"  y1="200" x2="170" y2="200"/>
+          <line class="draw" style="--delay:2.15s" x1="230" y1="160" x2="230" y2="260"/>
+          <line class="draw" style="--delay:2.15s" x1="50"  y1="160" x2="230" y2="160"/>
+          <line class="draw" style="--delay:2.35s" x1="290" y1="120" x2="290" y2="260"/>
+          <line class="draw" style="--delay:2.35s" x1="50"  y1="120" x2="290" y2="120"/>
+          <line class="draw" style="--delay:2.55s" x1="350" y1="80"  x2="350" y2="260"/>
+          <line class="draw" style="--delay:2.55s" x1="50"  y1="80"  x2="350" y2="80"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#2dd4bf">
+    <div class="badge rise" style="--delay:.1s">۴</div>
+    <h2 class="rise" style="--delay:.25s">دوره متوسطه دوم</h2>
+    <p class="lead rise" style="--delay:.4s">
+      می‌آموزیم که <span class="accent">دنباله‌ها همان الگوها هستند</span> و در واقع
+      نوعی <span class="accent">رابطه بین یک مجموعه ورودی و یک مجموعه خروجی</span>‌اند.
+    </p>
+
+    <div class="coord-box rise" style="--delay:.6s">
+      <svg class="venn" viewBox="0 0 500 345" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <marker id="arw" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 z" fill="#7dd3fc"/>
+          </marker>
+        </defs>
+
+        <ellipse class="pt" style="--delay:.75s" cx="150" cy="170" rx="115" ry="130"
+                 fill="rgba(99,102,241,.10)" stroke="#818cf8" stroke-width="2"/>
+        <ellipse class="pt" style="--delay:.95s" cx="350" cy="170" rx="115" ry="130"
+                 fill="rgba(45,212,191,.10)" stroke="#2dd4bf" stroke-width="2"/>
+
+        <text class="pt" style="--delay:1.1s" x="150" y="24" fill="#a5b4fc" font-size="15"
+              font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">مجموعه ورودی (دامنه)</text>
+        <text class="pt" style="--delay:1.1s" x="350" y="24" fill="#5eead4" font-size="15"
+              font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">مجموعه خروجی (برد)</text>
+
+        <g stroke="#7dd3fc" stroke-width="2" marker-end="url(#arw)">
+          <line class="draw" style="--delay:1.4s" x1="136" y1="80"  x2="362" y2="80"/>
+          <line class="draw" style="--delay:1.55s" x1="136" y1="125" x2="362" y2="125"/>
+          <line class="draw" style="--delay:1.7s" x1="136" y1="170" x2="362" y2="170"/>
+          <line class="draw" style="--delay:1.85s" x1="136" y1="215" x2="362" y2="215"/>
+          <line class="draw" style="--delay:2.0s" x1="136" y1="260" x2="362" y2="260"/>
+        </g>
+
+        <g font-family="Vazirmatn, sans-serif" font-size="15" font-weight="700"
+           text-anchor="middle" dominant-baseline="central">
+          <circle class="pt" style="--delay:1.2s" cx="115" cy="80"  r="20" fill="#131a3f" stroke="#818cf8" stroke-width="2"/>
+          <text  class="pt" style="--delay:1.2s" x="115" y="80"  fill="#e0e7ff">۱</text>
+          <circle class="pt" style="--delay:1.3s" cx="115" cy="125" r="20" fill="#131a3f" stroke="#818cf8" stroke-width="2"/>
+          <text  class="pt" style="--delay:1.3s" x="115" y="125" fill="#e0e7ff">۲</text>
+          <circle class="pt" style="--delay:1.4s" cx="115" cy="170" r="20" fill="#131a3f" stroke="#818cf8" stroke-width="2"/>
+          <text  class="pt" style="--delay:1.4s" x="115" y="170" fill="#e0e7ff">۳</text>
+          <circle class="pt" style="--delay:1.5s" cx="115" cy="215" r="20" fill="#131a3f" stroke="#818cf8" stroke-width="2"/>
+          <text  class="pt" style="--delay:1.5s" x="115" y="215" fill="#e0e7ff">۴</text>
+          <circle class="pt" style="--delay:1.6s" cx="115" cy="260" r="20" fill="#131a3f" stroke="#818cf8" stroke-width="2"/>
+          <text  class="pt" style="--delay:1.6s" x="115" y="260" fill="#e0e7ff">۵</text>
+        </g>
+
+        <g font-family="Vazirmatn, sans-serif" font-size="15" font-weight="700"
+           text-anchor="middle" dominant-baseline="central">
+          <circle class="pt" style="--delay:2.2s" cx="385" cy="80"  r="20" fill="#0e2b2c" stroke="#2dd4bf" stroke-width="2"/>
+          <text  class="pt" style="--delay:2.2s" x="385" y="80"  fill="#ccfbf1">۳</text>
+          <circle class="pt" style="--delay:2.3s" cx="385" cy="125" r="20" fill="#0e2b2c" stroke="#2dd4bf" stroke-width="2"/>
+          <text  class="pt" style="--delay:2.3s" x="385" y="125" fill="#ccfbf1">۵</text>
+          <circle class="pt" style="--delay:2.4s" cx="385" cy="170" r="20" fill="#0e2b2c" stroke="#2dd4bf" stroke-width="2"/>
+          <text  class="pt" style="--delay:2.4s" x="385" y="170" fill="#ccfbf1">۷</text>
+          <circle class="pt" style="--delay:2.5s" cx="385" cy="215" r="20" fill="#0e2b2c" stroke="#2dd4bf" stroke-width="2"/>
+          <text  class="pt" style="--delay:2.5s" x="385" y="215" fill="#ccfbf1">۹</text>
+          <circle class="pt" style="--delay:2.6s" cx="385" cy="260" r="20" fill="#0e2b2c" stroke="#2dd4bf" stroke-width="2"/>
+          <text  class="pt" style="--delay:2.6s" x="385" y="260" fill="#ccfbf1">۱۱</text>
+        </g>
+
+        <text class="pt" style="--delay:2.8s" x="150" y="332" fill="#94a3c8" font-size="14"
+              text-anchor="middle" font-family="Vazirmatn, sans-serif">شماره شکل‌ها</text>
+        <text class="pt" style="--delay:2.8s" x="350" y="332" fill="#94a3c8" font-size="14"
+              text-anchor="middle" font-family="Vazirmatn, sans-serif">جمله‌های دنباله</text>
+      </svg>
+    </div>
+
+    <div class="rule rise" style="--delay:3.1s">
+      هر شماره شکل ← یک جمله‌ی دنباله &nbsp;|&nbsp; این همان <span class="accent">تابع</span> است!
+    </div>
+  </section>
+
+  <div class="end">
+    <button id="toPage2" class="btn">ادامه</button>
+    <p class="end-note">مقصد بعدی: تعریف دقیق تابع…</p>
+  </div>
+
+</main>
+
+<!-- ============ صفحه ۲ : کارت‌های ۵ تا ۸ ============ -->
+<main id="page2" class="page">
+
+  <section class="card" style="--c:#818cf8">
+    <div class="badge rise" style="--delay:.1s">۵</div>
+    <h2 class="rise" style="--delay:.25s">تعریف تابع</h2>
+    <p class="lead rise" style="--delay:.4s">
+      در ریاضی، <span class="accent">تابع</span> رابطه‌ای است که به هر عضو از مجموعه ورودی (دامنه) دقیقاً یک عضو از مجموعه خروجی (برد) نسبت می‌دهد.
+    </p>
+    <div class="definition rise" style="--delay:.6s">
+      <strong>تابع</strong> مجموعه‌ای از زوج‌های مرتب است که هیچ دو زوج مرتبی دارای مؤلفه‌ی اول یکسان و مؤلفه‌ی دوم متفاوت نیستند.
+      <br>
+      به بیان ساده‌تر: هر ورودی فقط یک خروجی دارد.
+    </div>
+  </section>
+
+  <section class="card" style="--c:#60a5fa">
+    <div class="badge rise" style="--delay:.1s">۶</div>
+    <h2 class="rise" style="--delay:.25s">دنباله، تابعی از اعداد طبیعی به اعداد طبیعی فرد</h2>
+    <div class="formula-box rise" style="--delay:.4s">
+      f : ℕ → ℕ &nbsp;,&nbsp; f(n) = 2n − 1
+    </div>
+    <p class="lead rise" style="--delay:.55s">
+      در واقع دنباله نوعی تابع است که ورودی آن اعداد طبیعی و خروجی نیز اعداد طبیعی فرد هستند.
+    </p>
+
+    <div class="coord-box rise" style="--delay:.8s">
+      <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+          <line x1="110" y1="40" x2="110" y2="260"/>
+          <line x1="170" y1="40" x2="170" y2="260"/>
+          <line x1="230" y1="40" x2="230" y2="260"/>
+          <line x1="290" y1="40" x2="290" y2="260"/>
+          <line x1="350" y1="40" x2="350" y2="260"/>
+          <line x1="50" y1="60" x2="410" y2="60"/>
+          <line x1="50" y1="80" x2="410" y2="80"/>
+          <line x1="50" y1="100" x2="410" y2="100"/>
+          <line x1="50" y1="120" x2="410" y2="120"/>
+          <line x1="50" y1="140" x2="410" y2="140"/>
+          <line x1="50" y1="160" x2="410" y2="160"/>
+          <line x1="50" y1="180" x2="410" y2="180"/>
+          <line x1="50" y1="200" x2="410" y2="200"/>
+          <line x1="50" y1="220" x2="410" y2="220"/>
+          <line x1="50" y1="240" x2="410" y2="240"/>
+        </g>
+        <line x1="50" y1="260" x2="424" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+        <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+        <polygon points="424,260 414,255 414,265" fill="#7dd3fc"/>
+        <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+        <text x="418" y="278" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">n</text>
+        <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">a</text>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+          <text x="110" y="278">۱</text>
+          <text x="170" y="278">۲</text>
+          <text x="230" y="278">۳</text>
+          <text x="290" y="278">۴</text>
+          <text x="350" y="278">۵</text>
+        </g>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+          <text x="42" y="244">۱</text>
+          <text x="42" y="204">۳</text>
+          <text x="42" y="164">۵</text>
+          <text x="42" y="124">۷</text>
+          <text x="42" y="84">۹</text>
+        </g>
+        <g>
+          <circle class="pt" style="--delay:1.7s" cx="110" cy="240" r="7" fill="#60a5fa" stroke="#e0f2fe" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.9s" cx="170" cy="200" r="7" fill="#60a5fa" stroke="#e0f2fe" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.1s" cx="230" cy="160" r="7" fill="#60a5fa" stroke="#e0f2fe" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.3s" cx="290" cy="120" r="7" fill="#60a5fa" stroke="#e0f2fe" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.5s" cx="350" cy="80"  r="7" fill="#60a5fa" stroke="#e0f2fe" stroke-width="2"/>
+        </g>
+        <g stroke="rgba(96,165,250,.30)" stroke-width="1" stroke-dasharray="4 4">
+          <line class="draw" style="--delay:1.75s" x1="110" y1="240" x2="110" y2="260"/>
+          <line class="draw" style="--delay:1.75s" x1="50"  y1="240" x2="110" y2="240"/>
+          <line class="draw" style="--delay:1.95s" x1="170" y1="200" x2="170" y2="260"/>
+          <line class="draw" style="--delay:1.95s" x1="50"  y1="200" x2="170" y2="200"/>
+          <line class="draw" style="--delay:2.15s" x1="230" y1="160" x2="230" y2="260"/>
+          <line class="draw" style="--delay:2.15s" x1="50"  y1="160" x2="230" y2="160"/>
+          <line class="draw" style="--delay:2.35s" x1="290" y1="120" x2="290" y2="260"/>
+          <line class="draw" style="--delay:2.35s" x1="50"  y1="120" x2="290" y2="120"/>
+          <line class="draw" style="--delay:2.55s" x1="350" y1="80"  x2="350" y2="260"/>
+          <line class="draw" style="--delay:2.55s" x1="50"  y1="80"  x2="350" y2="80"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#22d3ee">
+    <div class="badge rise" style="--delay:.1s">۷</div>
+    <h2 class="rise" style="--delay:.25s">گسترش دامنه و برد به اعداد حقیقی</h2>
+    <div class="formula-box rise" style="--delay:.4s">
+      f : ℝ → ℝ &nbsp;,&nbsp; f(x) = 2x − 1
+    </div>
+    <p class="lead rise" style="--delay:.55s">
+      بیایید دامنه و برد تابع را از اعداد طبیعی به اعداد حقیقی گسترش بدهیم. در این حالت به‌جای چند نقطه، بی‌شمار نقطه داریم که کنار هم یک خط را می‌سازند.
+    </p>
+
+    <div class="coord-box rise" style="--delay:.8s">
+      <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+          <line x1="110" y1="40" x2="110" y2="260"/>
+          <line x1="170" y1="40" x2="170" y2="260"/>
+          <line x1="230" y1="40" x2="230" y2="260"/>
+          <line x1="290" y1="40" x2="290" y2="260"/>
+          <line x1="350" y1="40" x2="350" y2="260"/>
+          <line x1="50" y1="60" x2="410" y2="60"/>
+          <line x1="50" y1="80" x2="410" y2="80"/>
+          <line x1="50" y1="100" x2="410" y2="100"/>
+          <line x1="50" y1="120" x2="410" y2="120"/>
+          <line x1="50" y1="140" x2="410" y2="140"/>
+          <line x1="50" y1="160" x2="410" y2="160"/>
+          <line x1="50" y1="180" x2="410" y2="180"/>
+          <line x1="50" y1="200" x2="410" y2="200"/>
+          <line x1="50" y1="220" x2="410" y2="220"/>
+          <line x1="50" y1="240" x2="410" y2="240"/>
+        </g>
+        <line x1="50" y1="260" x2="424" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+        <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+        <polygon points="424,260 414,255 414,265" fill="#7dd3fc"/>
+        <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+        <text x="418" y="278" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+        <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+          <text x="110" y="278">۱</text>
+          <text x="170" y="278">۲</text>
+          <text x="230" y="278">۳</text>
+          <text x="290" y="278">۴</text>
+          <text x="350" y="278">۵</text>
+        </g>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+          <text x="42" y="244">۱</text>
+          <text x="42" y="204">۳</text>
+          <text x="42" y="164">۵</text>
+          <text x="42" y="124">۷</text>
+          <text x="42" y="84">۹</text>
+        </g>
+        <line class="draw" style="--delay:1.4s" x1="80" y1="260" x2="380" y2="60"
+              stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+        <g fill="#22d3ee">
+          <circle class="pt" style="--delay:1.5s" cx="110" cy="240" r="3"/>
+          <circle class="pt" style="--delay:1.6s" cx="125" cy="230" r="3"/>
+          <circle class="pt" style="--delay:1.7s" cx="140" cy="220" r="3"/>
+          <circle class="pt" style="--delay:1.8s" cx="155" cy="210" r="3"/>
+          <circle class="pt" style="--delay:1.9s" cx="170" cy="200" r="3"/>
+          <circle class="pt" style="--delay:2.0s" cx="185" cy="190" r="3"/>
+          <circle class="pt" style="--delay:2.1s" cx="200" cy="180" r="3"/>
+          <circle class="pt" style="--delay:2.2s" cx="215" cy="170" r="3"/>
+          <circle class="pt" style="--delay:2.3s" cx="230" cy="160" r="3"/>
+          <circle class="pt" style="--delay:2.4s" cx="245" cy="150" r="3"/>
+          <circle class="pt" style="--delay:2.5s" cx="260" cy="140" r="3"/>
+          <circle class="pt" style="--delay:2.6s" cx="275" cy="130" r="3"/>
+          <circle class="pt" style="--delay:2.7s" cx="290" cy="120" r="3"/>
+          <circle class="pt" style="--delay:2.8s" cx="305" cy="110" r="3"/>
+          <circle class="pt" style="--delay:2.9s" cx="320" cy="100" r="3"/>
+          <circle class="pt" style="--delay:3.0s" cx="335" cy="90" r="3"/>
+          <circle class="pt" style="--delay:3.1s" cx="350" cy="80" r="3"/>
+          <circle class="pt" style="--delay:3.2s" cx="365" cy="70" r="3"/>
+        </g>
+        <g>
+          <circle class="pt" style="--delay:2.0s" cx="110" cy="240" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.2s" cx="170" cy="200" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.4s" cx="230" cy="160" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.6s" cx="290" cy="120" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+          <circle class="pt" style="--delay:2.8s" cx="350" cy="80"  r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#2dd4bf">
+    <div class="badge rise" style="--delay:.1s">۸</div>
+    <h2 class="rise" style="--delay:.25s">مقایسه‌ی نمودار گسسته و پیوسته</h2>
+    <p class="lead rise" style="--delay:.4s">
+      در تصویر زیر تفاوت نمودار تابع با دامنه‌ی اعداد طبیعی (گسسته) و دامنه‌ی اعداد حقیقی (پیوسته) را می‌بینید.
+    </p>
+
+    <div class="two-graphs rise" style="--delay:.7s">
+      <div class="graph-col">
+        <div class="formula-small">f : ℕ → ℕ &nbsp;,&nbsp; f(n) = 2n − 1</div>
+        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+            <line x1="110" y1="40" x2="110" y2="260"/>
+            <line x1="170" y1="40" x2="170" y2="260"/>
+            <line x1="230" y1="40" x2="230" y2="260"/>
+            <line x1="290" y1="40" x2="290" y2="260"/>
+            <line x1="350" y1="40" x2="350" y2="260"/>
+            <line x1="50" y1="60" x2="410" y2="60"/>
+            <line x1="50" y1="80" x2="410" y2="80"/>
+            <line x1="50" y1="100" x2="410" y2="100"/>
+            <line x1="50" y1="120" x2="410" y2="120"/>
+            <line x1="50" y1="140" x2="410" y2="140"/>
+            <line x1="50" y1="160" x2="410" y2="160"/>
+            <line x1="50" y1="180" x2="410" y2="180"/>
+            <line x1="50" y1="200" x2="410" y2="200"/>
+            <line x1="50" y1="220" x2="410" y2="220"/>
+            <line x1="50" y1="240" x2="410" y2="240"/>
+          </g>
+          <line x1="50" y1="260" x2="424" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+          <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+          <polygon points="424,260 414,255 414,265" fill="#7dd3fc"/>
+          <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+          <text x="418" y="278" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">n</text>
+          <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">a</text>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+            <text x="110" y="278">۱</text>
+            <text x="170" y="278">۲</text>
+            <text x="230" y="278">۳</text>
+            <text x="290" y="278">۴</text>
+            <text x="350" y="278">۵</text>
+          </g>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+            <text x="42" y="244">۱</text>
+            <text x="42" y="204">۳</text>
+            <text x="42" y="164">۵</text>
+            <text x="42" y="124">۷</text>
+            <text x="42" y="84">۹</text>
+          </g>
+          <g>
+            <circle class="pt" style="--delay:1.0s" cx="110" cy="240" r="7" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.2s" cx="170" cy="200" r="7" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.4s" cx="230" cy="160" r="7" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.6s" cx="290" cy="120" r="7" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.8s" cx="350" cy="80"  r="7" fill="#2dd4bf" stroke="#e6fffb" stroke-width="2"/>
+          </g>
+          <g stroke="rgba(45,212,191,.30)" stroke-width="1" stroke-dasharray="4 4">
+            <line class="draw" style="--delay:1.05s" x1="110" y1="240" x2="110" y2="260"/>
+            <line class="draw" style="--delay:1.05s" x1="50"  y1="240" x2="110" y2="240"/>
+            <line class="draw" style="--delay:1.25s" x1="170" y1="200" x2="170" y2="260"/>
+            <line class="draw" style="--delay:1.25s" x1="50"  y1="200" x2="170" y2="200"/>
+            <line class="draw" style="--delay:1.45s" x1="230" y1="160" x2="230" y2="260"/>
+            <line class="draw" style="--delay:1.45s" x1="50"  y1="160" x2="230" y2="160"/>
+            <line class="draw" style="--delay:1.65s" x1="290" y1="120" x2="290" y2="260"/>
+            <line class="draw" style="--delay:1.65s" x1="50"  y1="120" x2="290" y2="120"/>
+            <line class="draw" style="--delay:1.85s" x1="350" y1="80"  x2="350" y2="260"/>
+            <line class="draw" style="--delay:1.85s" x1="50"  y1="80"  x2="350" y2="80"/>
+          </g>
+        </svg>
+        <div class="graph-caption">نمودار گسسته</div>
+      </div>
+
+      <div class="graph-col">
+        <div class="formula-small">f : ℝ → ℝ &nbsp;,&nbsp; f(x) = 2x − 1</div>
+        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+            <line x1="110" y1="40" x2="110" y2="260"/>
+            <line x1="170" y1="40" x2="170" y2="260"/>
+            <line x1="230" y1="40" x2="230" y2="260"/>
+            <line x1="290" y1="40" x2="290" y2="260"/>
+            <line x1="350" y1="40" x2="350" y2="260"/>
+            <line x1="50" y1="60" x2="410" y2="60"/>
+            <line x1="50" y1="80" x2="410" y2="80"/>
+            <line x1="50" y1="100" x2="410" y2="100"/>
+            <line x1="50" y1="120" x2="410" y2="120"/>
+            <line x1="50" y1="140" x2="410" y2="140"/>
+            <line x1="50" y1="160" x2="410" y2="160"/>
+            <line x1="50" y1="180" x2="410" y2="180"/>
+            <line x1="50" y1="200" x2="410" y2="200"/>
+            <line x1="50" y1="220" x2="410" y2="220"/>
+            <line x1="50" y1="240" x2="410" y2="240"/>
+          </g>
+          <line x1="50" y1="260" x2="424" y2="260" stroke="#7dd3fc" stroke-width="2"/>
+          <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+          <polygon points="424,260 414,255 414,265" fill="#7dd3fc"/>
+          <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+          <text x="418" y="278" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+          <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+            <text x="110" y="278">۱</text>
+            <text x="170" y="278">۲</text>
+            <text x="230" y="278">۳</text>
+            <text x="290" y="278">۴</text>
+            <text x="350" y="278">۵</text>
+          </g>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+            <text x="42" y="244">۱</text>
+            <text x="42" y="204">۳</text>
+            <text x="42" y="164">۵</text>
+            <text x="42" y="124">۷</text>
+            <text x="42" y="84">۹</text>
+          </g>
+          <line class="draw" style="--delay:1.0s" x1="80" y1="260" x2="380" y2="60"
+                stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+          <g fill="#22d3ee">
+            <circle class="pt" style="--delay:1.1s" cx="110" cy="240" r="3"/>
+            <circle class="pt" style="--delay:1.2s" cx="125" cy="230" r="3"/>
+            <circle class="pt" style="--delay:1.3s" cx="140" cy="220" r="3"/>
+            <circle class="pt" style="--delay:1.4s" cx="155" cy="210" r="3"/>
+            <circle class="pt" style="--delay:1.5s" cx="170" cy="200" r="3"/>
+            <circle class="pt" style="--delay:1.6s" cx="185" cy="190" r="3"/>
+            <circle class="pt" style="--delay:1.7s" cx="200" cy="180" r="3"/>
+            <circle class="pt" style="--delay:1.8s" cx="215" cy="170" r="3"/>
+            <circle class="pt" style="--delay:1.9s" cx="230" cy="160" r="3"/>
+            <circle class="pt" style="--delay:2.0s" cx="245" cy="150" r="3"/>
+            <circle class="pt" style="--delay:2.1s" cx="260" cy="140" r="3"/>
+            <circle class="pt" style="--delay:2.2s" cx="275" cy="130" r="3"/>
+            <circle class="pt" style="--delay:2.3s" cx="290" cy="120" r="3"/>
+            <circle class="pt" style="--delay:2.4s" cx="305" cy="110" r="3"/>
+            <circle class="pt" style="--delay:2.5s" cx="320" cy="100" r="3"/>
+            <circle class="pt" style="--delay:2.6s" cx="335" cy="90" r="3"/>
+            <circle class="pt" style="--delay:2.7s" cx="350" cy="80" r="3"/>
+            <circle class="pt" style="--delay:2.8s" cx="365" cy="70" r="3"/>
+          </g>
+          <g>
+            <circle class="pt" style="--delay:1.5s" cx="110" cy="240" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.7s" cx="170" cy="200" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+            <circle class="pt" style="--delay:1.9s" cx="230" cy="160" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+            <circle class="pt" style="--delay:2.1s" cx="290" cy="120" r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+            <circle class="pt" style="--delay:2.3s" cx="350" cy="80"  r="6" fill="#f0fdff" stroke="#22d3ee" stroke-width="2"/>
+          </g>
+        </svg>
+        <div class="graph-caption">نمودار پیوسته</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="end">
+    <button id="toPage3" class="btn">ادامه</button>
+    <p class="end-note">مقصد بعدی: تابع درجه دوم و ریشه‌ها…</p>
+  </div>
+
+</main>
+<!-- ============ صفحه ۳ : کارت‌های ۹ تا ۱۲ ============ -->
+<main id="page3" class="page">
+
+  <section class="card" style="--c:#818cf8">
+    <div class="badge rise" style="--delay:.1s">۹</div>
+    <h2 class="rise" style="--delay:.25s">یک مثال جدید: دنباله و تابع درجه دوم</h2>
+    <p class="lead rise" style="--delay:.4s">
+      این بار یک الگوی درجه دوم را در نظر بگیرید. همان رابطه را یک‌بار با دامنه‌ی اعداد طبیعی (به‌صورت دنباله و نقطه‌های گسسته) و یک‌بار با دامنه‌ی اعداد حقیقی (به‌صورت پیوسته) می‌بینیم.
+    </p>
+
+    <div class="two-graphs rise" style="--delay:.7s">
+      <div class="graph-col">
+        <div class="formula-small">aₙ = −n² + 6n − 5 &nbsp;,&nbsp; n ∈ ℕ</div>
+        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+            <line x1="95" y1="20" x2="95" y2="260"/><line x1="140" y1="20" x2="140" y2="260"/>
+            <line x1="185" y1="20" x2="185" y2="260"/><line x1="230" y1="20" x2="230" y2="260"/>
+            <line x1="275" y1="20" x2="275" y2="260"/><line x1="320" y1="20" x2="320" y2="260"/>
+            <line x1="50" y1="210" x2="410" y2="210"/><line x1="50" y1="180" x2="410" y2="180"/>
+            <line x1="50" y1="150" x2="410" y2="150"/><line x1="50" y1="120" x2="410" y2="120"/>
+            <line x1="50" y1="90" x2="410" y2="90"/><line x1="50" y1="60" x2="410" y2="60"/>
+          </g>
+          <line x1="50" y1="240" x2="425" y2="240" stroke="#7dd3fc" stroke-width="2"/>
+          <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
+          <polygon points="425,240 415,235 415,245" fill="#7dd3fc"/>
+          <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+          <text x="417" y="258" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">n</text>
+          <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">a</text>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+            <text x="95" y="258">۱</text><text x="140" y="258">۲</text><text x="185" y="258">۳</text>
+            <text x="230" y="258">۴</text><text x="275" y="258">۵</text>
+          </g>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+            <text x="42" y="214">۱</text><text x="42" y="184">۲</text><text x="42" y="154">۳</text><text x="42" y="124">۴</text>
+          </g>
+          <circle class="pt" style="--delay:1.0s" cx="95" cy="240" r="7" fill="#818cf8" stroke="#e0e7ff" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.2s" cx="140" cy="150" r="7" fill="#818cf8" stroke="#e0e7ff" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.4s" cx="185" cy="120" r="7" fill="#818cf8" stroke="#e0e7ff" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.6s" cx="230" cy="150" r="7" fill="#818cf8" stroke="#e0e7ff" stroke-width="2"/>
+          <circle class="pt" style="--delay:1.8s" cx="275" cy="240" r="7" fill="#818cf8" stroke="#e0e7ff" stroke-width="2"/>
+        </svg>
+        <div class="graph-caption">دنباله درجه دوم (گسسته)</div>
+      </div>
+
+      <div class="graph-col">
+        <div class="formula-small">f(x) = −x² + 6x − 5 &nbsp;,&nbsp; x ∈ ℝ</div>
+        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+            <line x1="95" y1="20" x2="95" y2="260"/><line x1="140" y1="20" x2="140" y2="260"/>
+            <line x1="185" y1="20" x2="185" y2="260"/><line x1="230" y1="20" x2="230" y2="260"/>
+            <line x1="275" y1="20" x2="275" y2="260"/><line x1="320" y1="20" x2="320" y2="260"/>
+            <line x1="50" y1="210" x2="410" y2="210"/><line x1="50" y1="180" x2="410" y2="180"/>
+            <line x1="50" y1="150" x2="410" y2="150"/><line x1="50" y1="120" x2="410" y2="120"/>
+            <line x1="50" y1="90" x2="410" y2="90"/><line x1="50" y1="60" x2="410" y2="60"/>
+          </g>
+          <line x1="50" y1="240" x2="425" y2="240" stroke="#7dd3fc" stroke-width="2"/>
+          <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
+          <polygon points="425,240 415,235 415,245" fill="#7dd3fc"/>
+          <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+          <text x="417" y="258" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+          <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+            <text x="95" y="258">۱</text><text x="140" y="258">۲</text><text x="185" y="258">۳</text>
+            <text x="230" y="258">۴</text><text x="275" y="258">۵</text>
+          </g>
+          <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+            <text x="42" y="214">۱</text><text x="42" y="184">۲</text><text x="42" y="154">۳</text><text x="42" y="124">۴</text>
+          </g>
+          <path class="draw" style="--delay:1.0s" d="M 95 240 Q 185 0 275 240" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <div class="graph-caption">تابع درجه دوم (پیوسته)</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#60a5fa">
+    <div class="badge rise" style="--delay:.1s">۱۰</div>
+    <h2 class="rise" style="--delay:.25s">ریشه‌های تابع کجاست؟</h2>
+    <p class="lead rise" style="--delay:.4s">
+      به نقاطی که نمودار، محور xها را قطع می‌کند دقت کنید. در این نقاط مقدار تابع برابر صفر است؛ یعنی همان جواب‌های معادله‌ی <span class="accent">f(x) = 0</span>.
+    </p>
+    <div class="coord-box rise" style="--delay:.6s">
+      <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+          <line x1="95" y1="20" x2="95" y2="260"/><line x1="140" y1="20" x2="140" y2="260"/>
+          <line x1="185" y1="20" x2="185" y2="260"/><line x1="230" y1="20" x2="230" y2="260"/>
+          <line x1="275" y1="20" x2="275" y2="260"/><line x1="320" y1="20" x2="320" y2="260"/>
+          <line x1="50" y1="210" x2="410" y2="210"/><line x1="50" y1="180" x2="410" y2="180"/>
+          <line x1="50" y1="150" x2="410" y2="150"/><line x1="50" y1="120" x2="410" y2="120"/>
+          <line x1="50" y1="90" x2="410" y2="90"/><line x1="50" y1="60" x2="410" y2="60"/>
+        </g>
+        <line x1="50" y1="240" x2="425" y2="240" stroke="#7dd3fc" stroke-width="2"/>
+        <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
+        <polygon points="425,240 415,235 415,245" fill="#7dd3fc"/>
+        <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+        <text x="417" y="258" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+        <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+          <text x="95" y="258">۱</text><text x="140" y="258">۲</text><text x="185" y="258">۳</text>
+          <text x="230" y="258">۴</text><text x="275" y="258">۵</text>
+        </g>
+        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
+          <text x="42" y="214">۱</text><text x="42" y="184">۲</text><text x="42" y="154">۳</text><text x="42" y="124">۴</text>
+        </g>
+        <path class="draw" style="--delay:.9s" d="M 95 240 Q 185 0 275 240" fill="none" stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+        <circle class="pt" style="--delay:1.4s" cx="95" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+        <circle class="pt" style="--delay:1.6s" cx="275" cy="240" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+        <g fill="#fecaca" font-size="13" font-weight="700" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+          <text class="pt" style="--delay:1.9s" x="95" y="220">ریشه</text>
+          <text class="pt" style="--delay:1.9s" x="275" y="220">ریشه</text>
+        </g>
+        <text class="pt" style="--delay:2.1s" x="220" y="285" fill="#bfdbfe" font-size="14" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">محل برخورد نمودار با محور xها ← جواب‌های معادله‌ی f(x) = 0</text>
+      </svg>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#22d3ee">
+    <div class="badge rise" style="--delay:.1s">۱۱</div>
+    <h2 class="rise" style="--delay:.25s">حالا فهمیدی چرا؟</h2>
+    <p class="lead rise" style="--delay:.4s">یک نگاه به مسیری که آمده‌ایم بیندازیم…</p>
+    <div class="dialogue">
+      <div class="bubble q rise" style="--delay:.7s">
+        <span class="tag">پرسش</span> حالا فهمیدی چرا حل معادلات درجه دوم را یاد گرفتی؟
+      </div>
+      <div class="bubble a rise" style="--delay:1.1s">
+        <span class="tag">پاسخ</span> چون می‌خواستیم به ریشه‌های تابع درجه دوم برسیم!
+      </div>
+    </div>
+  </section>
+
+  <section class="card" style="--c:#2dd4bf">
+    <div class="badge rise" style="--delay:.1s">۱۲</div>
+    <h2 class="rise" style="--delay:.25s">پس حواست را جمع کن!</h2>
+    <p class="lead rise" style="--delay:.4s">هر کدام از این دو، از تو یک چیز می‌خواهند. دقت کن تفاوتشان را بفهمی.</p>
+    <div class="dialogue">
+      <div class="bubble q rise" style="--delay:.7s"><span class="tag">معادله</span> از تو چه می‌خواهد؟</div>
+      <div class="bubble a rise" style="--delay:1.05s"><span class="tag">پاسخ</span> می‌پرسد: «کجا صفر می‌شوم؟ یا ریشه‌هایم کجاست؟»</div>
+      <div class="bubble q rise" style="--delay:1.4s"><span class="tag">تابع</span> از تو چه می‌خواهد؟</div>
+      <div class="bubble a rise" style="--delay:1.75s"><span class="tag">پاسخ</span> می‌خواهد تمام مقادیرش را پیدا کنی.</div>
+    </div>
+  </section>
+
+  <div class="end">
+    <button id="toPage4" class="btn">ادامه</button>
+    <p class="end-note">مقصد بعدی: حل معادلات درجه دوم و روش‌های آن…</p>
+  </div>
+
+</main>
+<!-- ============ صفحه ۴ : کارت‌های ۱۳ تا ۱۶ ============ -->
+<main id="page4" class="page">
+
+  <!-- ---------- کارت ۱۳ : معادله‌ی درجه دوم چیست؟ ---------- -->
+  <section class="card" style="--c:#818cf8">
+    <div class="badge rise" style="--delay:.1s">۱۳</div>
+    <h2 class="rise" style="--delay:.25s">معادله‌ی درجه دوم چیست؟</h2>
+    <p class="lead rise" style="--delay:.4s">
+      معادله‌ای که بزرگ‌ترین توان متغیر در آن <span class="accent">۲</span> باشد، یک معادله‌ی درجه دوم است.
+    </p>
+
+    <div class="definition rise" style="--delay:.6s">
+      شکل کلی: &nbsp; <strong style="direction:ltr;display:inline-block">ax² + bx + c = 0</strong> &nbsp; که در آن <strong>a ≠ 0</strong> است.
+    </div>
+
+    <p class="lead rise" style="--delay:.9s" style="margin-top:22px">
+      چند نمونه:
+    </p>
+    <div class="examples-grid rise" style="--delay:1.1s">
+      <div class="ex">x² − 5x + 6 = 0</div>
+      <div class="ex">2x² + 3x − 2 = 0</div>
+      <div class="ex">x² − 4 = 0</div>
+    </div>
+  </section>
+
+  <!-- ---------- کارت ۱۴ : سه روش برای رسیدن به ریشه‌ها ---------- -->
+  <section class="card" style="--c:#60a5fa">
+    <div class="badge rise" style="--delay:.1s">۱۴</div>
+    <h2 class="rise" style="--delay:.25s">سه روش برای رسیدن به ریشه‌ها</h2>
+    <p class="lead rise" style="--delay:.4s">
+      برای حل معادله‌ی درجه دوم سه راه اصلی داریم. هر سه به یک جواب می‌رسند، فقط مسیرشان متفاوت است.
+    </p>
+
+    <div class="methods">
+      <div class="method rise" style="--delay:.7s">
+        <h3>۱. تجزیه (فاکتورگیری)</h3>
+        <p>معادله را به شکل حاصل‌ضرب دو عبارت می‌نویسیم. هر عبارت را صفر می‌گذاریم.</p>
+        <div class="example">
+          x² − 5x + 6 = 0 &nbsp;→&nbsp; (x − 2)(x − 3) = 0 &nbsp;→&nbsp; x = 2 یا x = 3
+        </div>
+      </div>
+
+      <div class="method rise" style="--delay:1.0s">
+        <h3>۲. مربع کامل</h3>
+        <p>معادله را به شکل <span style="direction:ltr;display:inline-block">(x + p)² = q</span> تبدیل می‌کنیم و از طرفین جذر می‌گیریم.</p>
+        <div class="example">
+          x² − 5x + 6 = 0 &nbsp;→&nbsp; (x − 5/2)² = 1/4 &nbsp;→&nbsp; x = 2 یا x = 3
+        </div>
+      </div>
+
+      <div class="method rise" style="--delay:1.3s">
+        <h3>۳. فرمول ریشه‌یابی</h3>
+        <p>با استفاده از دلتا، ریشه‌ها را مستقیم حساب می‌کنیم:</p>
+        <div class="example">
+          Δ = b² − 4ac &nbsp;,&nbsp; x = (−b ± √Δ) / (2a)
+          <br>
+          Δ = 25 − 24 = 1 &nbsp;→&nbsp; x = (5 ± 1) / 2 &nbsp;→&nbsp; x = 2 یا x = 3
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- کارت ۱۵ : دلتا چه می‌گوید؟ ---------- -->
+  <section class="card" style="--c:#22d3ee">
+    <div class="badge rise" style="--delay:.1s">۱۵</div>
+    <h2 class="rise" style="--delay:.25s">دلتا چه می‌گوید؟</h2>
+    <p class="lead rise" style="--delay:.4s">
+      مقدار <span class="accent">Δ = b² − 4ac</span> از قبل به ما می‌گوید معادله چند ریشه دارد و نمودار تابع چند بار محور xها را قطع می‌کند.
+    </p>
+
+    <div class="delta-cases">
+      <div class="delta-case rise" style="--delay:.7s">
+        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="90" x2="190" y2="90" stroke="#7dd3fc" stroke-width="1.5"/>
+          <path d="M 25 30 Q 100 190 175 30" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="56" cy="90" r="5" fill="#f87171"/>
+          <circle cx="144" cy="90" r="5" fill="#f87171"/>
+        </svg>
+        <div class="label">Δ &gt; ۰</div>
+        <div class="sub">دو ریشه‌ی متمایز</div>
+      </div>
+
+      <div class="delta-case rise" style="--delay:.9s">
+        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="90" x2="190" y2="90" stroke="#7dd3fc" stroke-width="1.5"/>
+          <path d="M 25 20 Q 100 160 175 20" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="100" cy="90" r="5" fill="#f87171"/>
+        </svg>
+        <div class="label">Δ = ۰</div>
+        <div class="sub">یک ریشه‌ی مضاعف</div>
+      </div>
+
+      <div class="delta-case rise" style="--delay:1.1s">
+        <svg viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+          <line x1="10" y1="90" x2="190" y2="90" stroke="#7dd3fc" stroke-width="1.5"/>
+          <path d="M 25 10 Q 100 110 175 10" fill="none" stroke="#22d3ee" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="label">Δ &lt; ۰</div>
+        <div class="sub">بدون ریشه‌ی حقیقی</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- کارت ۱۶ : همه‌ی این‌ها برای پیدا کردن ریشه بود ---------- -->
+  <section class="card" style="--c:#2dd4bf">
+    <div class="badge rise" style="--delay:.1s">۱۶</div>
+    <h2 class="rise" style="--delay:.25s">همه‌ی این‌ها برای پیدا کردن ریشه بود</h2>
+    <p class="lead rise" style="--delay:.4s">
+      از دید تابع، ریشه‌ها همان نقاط برخورد با محور xها هستند. از دید معادله، ریشه‌ها همان جواب‌های معادله‌اند. پس هربار معادله‌ی درجه دوم می‌بینی، بدان که دنبال نقاط خاصی از یک تابع درجه دوم می‌گردی.
+    </p>
+
+    <div class="dialogue">
+      <div class="bubble q rise" style="--delay:.7s">
+        <span class="tag">یادت باشه</span>
+        معادله می‌پرسد: «کجا صفر می‌شوم؟»
+      </div>
+      <div class="bubble a rise" style="--delay:1.0s">
+        <span class="tag">پاسخ</span>
+        آنجا که نمودار، محور xها را قطع می‌کند.
+      </div>
+    </div>
+
+    <div class="final-note rise" style="--delay:1.4s">
+      پس هر معادله‌ی درجه دوم، یک تابع درجه دوم است که می‌خواهد بدانی کجا با محور xها برخورد می‌کند.
+    </div>
+  </section>
+
+  <!-- ---------- دکمه ادامه صفحه ۴ ---------- -->
+  <div class="end">
+    <button id="toPage5" class="btn">ادامه</button>
+    <p class="end-note">مقصد بعدی: کاربردها و مسائل بیشتر…</p>
+  </div>
+
+</main>
+<div id="scrollHint">↓ برای دیدن ادامه اسکرول کن</div>
+
+<script>
+/* ============================================================
+   ۱) آسمان پرستاره
+   ============================================================ */
+const canvas = document.getElementById('stars');
+const ctx = canvas.getContext('2d');
+let stars = [], W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+function buildStars(){
+  W = canvas.width  = Math.floor(innerWidth  * DPR);
+  H = canvas.height = Math.floor(innerHeight * DPR);
+  canvas.style.width  = innerWidth + 'px';
+  canvas.style.height = innerHeight + 'px';
+
+  const count = Math.min(420, Math.floor((innerWidth * innerHeight) / 4200));
+  stars = [];
+  for (let i = 0; i < count; i++){
+    stars.push({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: (Math.random() * 1.3 + 0.35) * DPR,
+      phase: Math.random() * Math.PI * 2,
+      speed: Math.random() * 0.018 + 0.004,
+      hue: Math.random() < 0.25 ? '190,230,255' : '255,255,255'
+    });
+  }
+}
+
+function drawStars(){
+  ctx.clearRect(0, 0, W, H);
+  for (const s of stars){
+    s.phase += s.speed;
+    const a = 0.30 + 0.70 * Math.abs(Math.sin(s.phase));
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(' + s.hue + ',' + a.toFixed(3) + ')';
+    ctx.fill();
+  }
+  requestAnimationFrame(drawStars);
+}
+
+buildStars();
+drawStars();
+addEventListener('resize', buildStars);
+
+/* ============================================================
+   ۲) عناصر اصلی
+   ============================================================ */
+const video       = document.getElementById('introVideo');
+const playOverlay = document.getElementById('playOverlay');
+const okBtn       = document.getElementById('okBtn');
+const intro       = document.getElementById('intro');
+const page1       = document.getElementById('page1');
+const page2       = document.getElementById('page2');
+const page3       = document.getElementById('page3');
+const page4 = document.getElementById('page4');
+const scrollHint  = document.getElementById('scrollHint');
+
+/* ============================================================
+   ۳) پخش ویدیو
+   ============================================================ */
+window.addEventListener('load', () => {
+  const p = video.play();
+  if (p && typeof p.then === 'function'){
+    p.then(() => playOverlay.classList.add('hide')).catch(() => {});
+  }
+});
+
+video.addEventListener('playing', () => playOverlay.classList.add('hide'));
+video.addEventListener('error', () => playOverlay.classList.add('hide'));
+playOverlay.addEventListener('click', () => {
+  video.play().then(() => playOverlay.classList.add('hide')).catch(()=>{});
+});
+
+/* ============================================================
+   ۴) Observerها
+   ============================================================ */
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('visible');
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -4% 0px' });
+
+const endObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting){
+      entry.target.classList.add('show');
+      endObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.35 });
+
+/* ============================================================
+   ۵) نمایش کارت‌ها
+   ============================================================ */
+function revealInView(root){
+  if (!root) return;
+  root.querySelectorAll('.card').forEach(card => {
+    if (card.classList.contains('visible')) return;
+    const r = card.getBoundingClientRect();
+    if (r.top < innerHeight * 0.95 && r.bottom > 0){
+      card.classList.add('visible');
+    } else {
+      cardObserver.observe(card);
+    }
+  });
+  root.querySelectorAll('.end').forEach(el => {
+    if (el.classList.contains('show')) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight && r.bottom > 0){
+      el.classList.add('show');
+    } else {
+      endObserver.observe(el);
+    }
+  });
+}
+
+function safetyReveal(root){
+  if (!root) return;
+  root.querySelectorAll('.card').forEach(card => {
+    const r = card.getBoundingClientRect();
+    if (r.top < innerHeight && r.bottom > 0) card.classList.add('visible');
+  });
+  root.querySelectorAll('.end').forEach(el => {
+    const r = el.getBoundingClientRect();
+    if (r.top < innerHeight && r.bottom > 0) el.classList.add('show');
+  });
+}
+
+function activatePage(page){
+  if (!page) return;
+  page.classList.add('active');
+  window.scrollTo(0, 0);
+
+  page.querySelectorAll('.card').forEach(c => c.classList.remove('visible'));
+  page.querySelectorAll('.end').forEach(e => e.classList.remove('show'));
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      revealInView(page);
+      setTimeout(() => safetyReveal(page), 1200);
+    });
+  });
+
+  showScrollHint();
+}
+
+/* ============================================================
+   ۶) راهنمای اسکرول
+   ============================================================ */
+let hintTimer = null;
+function showScrollHint(){
+  scrollHint.classList.add('show');
+  clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => scrollHint.classList.remove('show'), 5000);
+}
+
+addEventListener('scroll', () => {
+  if (scrollY > 120) scrollHint.classList.remove('show');
+}, { passive: true });
+
+/* ============================================================
+   ۷) سوییچ بین صفحه‌ها
+   ============================================================ */
+function switchPage(fromEl, toEl){
+  if (fromEl) fromEl.classList.remove('active');
+  activatePage(toEl);
+}
+
+/* ============================================================
+   ۸) رویدادها
+   ============================================================ */
+okBtn.addEventListener('click', () => {
+  try { video.pause(); } catch(e){}
+  intro.classList.add('hidden');
+  document.body.classList.remove('locked');
+  activatePage(page1);
+});
+
+document.getElementById('toPage2').addEventListener('click', () => switchPage(page1, page2));
+
+document.getElementById('toPage3').addEventListener('click', () => switchPage(page2, page3));
+
+document.getElementById('toPage4').addEventListener('click', () => {
+  switchPage(page3, page4);
+});
+
+document.getElementById('toPage5').addEventListener('click', () => {
+  alert('نقطه‌ی اتصال صفحه‌ی پنجم ✨');
+});
+</script>
+</body>
+</html>
