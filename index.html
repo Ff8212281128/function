@@ -1488,197 +1488,152 @@
     </div>
   </section>
 
-  <!-- ---------- کارت ۱۸ : معادله خط = تابع درجه اول ---------- -->
-  <section class="card" style="--c:#60a5fa">
-    <div class="badge rise" style="--delay:.1s">۱۸</div>
-    <h2 class="rise" style="--delay:.25s">معادله خط، همان تابع درجه اول است</h2>
-    <p class="lead rise" style="--delay:.4s">
-      هر معادله‌ی خطی مثل <span class="accent">y = 2x − 4</span> یک تابع درجه اول است. حل این معادله یعنی پیدا کردن <span class="accent">ریشه</span> — جایی که نمودار، محور xها را قطع می‌کند.
-    </p>
+<!-- ---------- کارت ۱۸ : معادله خط = تابع درجه اول ---------- -->
+<section class="card" style="--c:#60a5fa">
+  <div class="badge rise" style="--delay:.1s">۱۸</div>
+  <h2 class="rise" style="--delay:.25s">معادله خط، همان تابع درجه اول است</h2>
+  <p class="lead rise" style="--delay:.4s">
+    هر معادله‌ی خطی مثل <span class="accent">y = 2x − 4</span> یک تابع درجه اول است. حل این معادله یعنی پیدا کردن <span class="accent">ریشه</span> — جایی که نمودار، محور xها را قطع می‌کند.
+  </p>
 
-    <div class="coord-box rise" style="--delay:.7s">
-      
-<svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-    <line x1="90" y1="20" x2="90" y2="260"/>
-    <line x1="140" y1="20" x2="140" y2="260"/>
-    <line x1="190" y1="20" x2="190" y2="260"/>
-    <line x1="240" y1="20" x2="240" y2="260"/>
-    <line x1="290" y1="20" x2="290" y2="260"/>
-    <line x1="340" y1="20" x2="340" y2="260"/>
-    <line x1="50" y1="60" x2="410" y2="60"/>
-    <line x1="50" y1="110" x2="410" y2="110"/>
-    <line x1="50" y1="160" x2="410" y2="160"/>
-    <line x1="50" y1="210" x2="410" y2="210"/>
-  </g>
+  <div class="coord-box rise" style="--delay:.7s">
+    <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- شبکه -->
+      <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+        <line x1="90"  y1="40" x2="90"  y2="240"/>
+        <line x1="140" y1="40" x2="140" y2="240"/>
+        <line x1="190" y1="40" x2="190" y2="240"/>
+        <line x1="240" y1="40" x2="240" y2="240"/>
+        <line x1="290" y1="40" x2="290" y2="240"/>
+        <line x1="340" y1="40" x2="340" y2="240"/>
+        <line x1="50"  y1="60"  x2="410" y2="60"/>
+        <line x1="50"  y1="100" x2="410" y2="100"/>
+        <line x1="50"  y1="140" x2="410" y2="140"/>
+        <line x1="50"  y1="180" x2="410" y2="180"/>
+      </g>
 
-  <!-- محورها -->
-  <line x1="50" y1="190" x2="425" y2="190" stroke="#7dd3fc" stroke-width="2"/>
-  <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
-  <polygon points="425,190 415,185 415,195" fill="#7dd3fc"/>
-  <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
-  <text x="417" y="208" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
-  <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+      <!-- محورها -->
+      <line x1="50" y1="200" x2="425" y2="200" stroke="#7dd3fc" stroke-width="2"/>
+      <line x1="50" y1="260" x2="50"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+      <polygon points="425,200 415,195 415,205" fill="#7dd3fc"/>
+      <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+      <text x="417" y="218" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+      <text x="30"  y="30"  fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
 
-  <!-- برچسب‌های محور x: ۱ روی 90، ۲ روی 140، ... -->
-  <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-    <text x="90" y="208">۱</text>
-    <text x="140" y="208">۲</text>
-    <text x="190" y="208">۳</text>
-    <text x="240" y="208">۴</text>
-    <text x="290" y="208">۵</text>
-  </g>
-  <!-- برچسب‌های محور y -->
-  <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="end">
-    <text x="42" y="194">۰</text>
-    <text x="42" y="144">۲</text>
-    <text x="42" y="94">۴</text>
-    <text x="42" y="64">۵</text>
-  </g>
+      <!-- برچسب‌های محور x: ۱→90، ۲→140، ۳→190، ۴→240، ۵→290 -->
+      <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+        <text x="90"  y="218">۱</text>
+        <text x="140" y="218">۲</text>
+        <text x="190" y="218">۳</text>
+        <text x="240" y="218">۴</text>
+        <text x="290" y="218">۵</text>
+      </g>
 
-  <!-- خط y = 2x - 4: از x=0 تا x=5 -->
-  <!-- x=0 → (50, 190+(4×40)=350) خارج از کادر؛ پس از x=2 شروع می‌کنیم که y=0 است -->
-  <!-- نقاط: x=2→y=0 در (140,190) و x=5→y=6 در (290,-50) خارج؛ پس شیب را ملایم‌تر می‌گیریم -->
-  <!-- خط را از x=2 (ریشه) تا x=5 می‌کشیم؛ y=2x-4 -->
-  <!-- با ضریب عمودی 25 پیکسل برای هر واحد y: x=2→y=0، x=5→y=6، ارتفاع SVG=190-6*25=-... خارج -->
-  <!-- ضریب عمودی 15 پیکسل برای هر واحد: x=5→y=6، ارتفاع=190-90=100 -->
-  <line class="draw" style="--delay:1.0s"
-        x1="80" y1="235" x2="340" y2="85"
-        stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
+      <!-- خط y = 2x - 4 :
+           x=2 → y=0  → نقطه (140,200) روی محور
+           x=5 → y=6  → نقطه (290,200-6*20=80)
+           پس خط از x=2 تا x=5 کشیده می‌شود -->
+      <line class="draw" style="--delay:1.0s"
+            x1="140" y1="200" x2="290" y2="80"
+            stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- ریشه در x=2 -->
-  <circle class="pt" style="--delay:1.6s" cx="140" cy="190" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-  <text class="pt" style="--delay:1.9s" x="140" y="232" fill="#fecaca" font-size="14" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه (x = 2)</text>
-</svg>    </div>
+      <!-- امتداد خط به سمت پایین-چپ (x<2) -->
+      <line class="draw" style="--delay:1.2s"
+            x1="140" y1="200" x2="90" y2="300"
+            stroke="#60a5fa" stroke-width="3" stroke-linecap="round"/>
 
-    <div class="rule rise" style="--delay:2.2s">
-      y = 2x − 4 &nbsp;→&nbsp; حل معادله: 2x − 4 = 0 &nbsp;→&nbsp; x = 2 (ریشه)
-    </div>
-  </section>
+      <!-- ریشه در x = 2 -->
+      <circle class="pt" style="--delay:1.6s" cx="140" cy="200" r="10"
+              fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+      <text class="pt" style="--delay:1.9s" x="140" y="240"
+            fill="#fecaca" font-size="14" font-weight="700" text-anchor="middle"
+            font-family="Vazirmatn, sans-serif">ریشه (x = 2)</text>
+    </svg>
+  </div>
 
-  <!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
-  <section class="card" style="--c:#22d3ee">
-    <div class="badge rise" style="--delay:.1s">۱۹</div>
-    <h2 class="rise" style="--delay:.25s">اتحاد، همان تابع درجه دوم است</h2>
-    <p class="lead rise" style="--delay:.4s">
-      هر اتحاد درجه دوم مثل <span class="accent">y = x² − 5x + 6</span> یک تابع درجه دوم است. حل معادله‌ی درجه دوم، یعنی پیدا کردن <span class="accent">ریشه‌ها</span> — جایی که سهمی، محور xها را قطع می‌کند.
-    </p>
+  <div class="rule rise" style="--delay:2.2s">
+    y = 2x − 4 &nbsp;→&nbsp; حل معادله: 2x − 4 = 0 &nbsp;→&nbsp; x = 2 (ریشه)
+  </div>
+</section>
+ <!-- ---------- کارت ۱۹ : اتحاد = تابع درجه دوم ---------- -->
+<section class="card" style="--c:#22d3ee">
+  <div class="badge rise" style="--delay:.1s">۱۹</div>
+  <h2 class="rise" style="--delay:.25s">اتحاد، همان تابع درجه دوم است</h2>
+  <p class="lead rise" style="--delay:.4s">
+    هر اتحاد درجه دوم مثل <span class="accent">y = x² − 5x + 6</span> یک تابع درجه دوم است. حل معادله‌ی درجه دوم، یعنی پیدا کردن <span class="accent">ریشه‌ها</span> — جایی که سهمی، محور xها را قطع می‌کند.
+  </p>
 
-    <div class="coord-box rise" style="--delay:.7s">
-      <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
-        <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-          <line x1="90" y1="20" x2="90" y2="260"/>
-          <line x1="140" y1="20" x2="140" y2="260"/>
-          <line x1="190" y1="20" x2="190" y2="260"/>
-          <line x1="240" y1="20" x2="240" y2="260"/>
-          <line x1="290" y1="20" x2="290" y2="260"/>
-          <line x1="340" y1="20" x2="340" y2="260"/>
-          <line x1="50" y1="220" x2="410" y2="220"/>
-          <line x1="50" y1="180" x2="410" y2="180"/>
-          <line x1="50" y1="140" x2="410" y2="140"/>
-          <line x1="50" y1="100" x2="410" y2="100"/>
-          <line x1="50" y1="60"  x2="410" y2="60"/>
-        </g>
-        <line x1="50" y1="240" x2="425" y2="240" stroke="#7dd3fc" stroke-width="2"/>
-        <line x1="50" y1="260" x2="50" y2="22"  stroke="#7dd3fc" stroke-width="2"/>
-        <polygon points="425,240 415,235 415,245" fill="#7dd3fc"/>
-        <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
-        <text x="417" y="258" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
-        <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+  <div class="coord-box rise" style="--delay:.7s">
+    <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- شبکه -->
+      <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
+        <line x1="90"  y1="40" x2="90"  y2="260"/>
+        <line x1="140" y1="40" x2="140" y2="260"/>
+        <line x1="190" y1="40" x2="190" y2="260"/>
+        <line x1="240" y1="40" x2="240" y2="260"/>
+        <line x1="290" y1="40" x2="290" y2="260"/>
+        <line x1="340" y1="40" x2="340" y2="260"/>
+        <line x1="50"  y1="60"  x2="410" y2="60"/>
+        <line x1="50"  y1="100" x2="410" y2="100"/>
+        <line x1="50"  y1="140" x2="410" y2="140"/>
+        <line x1="50"  y1="180" x2="410" y2="180"/>
+      </g>
 
-        <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-          <text x="90" y="258">۱</text>
-          <text x="140" y="258">۲</text>
-          <text x="190" y="258">۳</text>
-          <text x="240" y="258">۴</text>
-          <text x="290" y="258">۵</text>
-        </g>
+      <!-- محورها: محور xها روی y=230 -->
+      <line x1="50" y1="230" x2="425" y2="230" stroke="#7dd3fc" stroke-width="2"/>
+      <line x1="50" y1="260" x2="50"  y2="22"  stroke="#7dd3fc" stroke-width="2"/>
+      <polygon points="425,230 415,225 415,235" fill="#7dd3fc"/>
+      <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
+      <text x="417" y="248" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
+      <text x="30"  y="30"  fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
 
-        <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-    <line x1="90" y1="20" x2="90" y2="260"/>
-    <line x1="140" y1="20" x2="140" y2="260"/>
-    <line x1="190" y1="20" x2="190" y2="260"/>
-    <line x1="240" y1="20" x2="240" y2="260"/>
-    <line x1="290" y1="20" x2="290" y2="260"/>
-    <line x1="340" y1="20" x2="340" y2="260"/>
-    <line x1="50" y1="40" x2="410" y2="40"/>
-    <line x1="50" y1="90" x2="410" y2="90"/>
-    <line x1="50" y1="140" x2="410" y2="140"/>
-    <line x1="50" y1="190" x2="410" y2="190"/>
-  </g>
+      <!-- برچسب‌های محور x: ۱→90، ۲→140، ۳→190، ۴→240، ۵→290 -->
+      <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
+        <text x="90"  y="248">۱</text>
+        <text x="140" y="248">۲</text>
+        <text x="190" y="248">۳</text>
+        <text x="240" y="248">۴</text>
+        <text x="290" y="248">۵</text>
+      </g>
 
-  <!-- محورها -->
-  <line x1="50" y1="230" x2="425" y2="230" stroke="#7dd3fc" stroke-width="2"/>
-  <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
-  <polygon points="425,230 415,225 415,235" fill="#7dd3fc"/>
-  <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
-  <text x="417" y="248" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
-  <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
+      <!-- سهمی y = x² - 5x + 6 :
+           ریشه‌ها: x=2 → (140,230) و x=3 → (190,230)
+           قله در x=2.5 → 165، y قله = -0.25
+           با ضریب عمودی 60 پیکسل: قله در ارتفاع 230 + 0.25*60 = 245؟ نه.
+           برای نمایش زیبا: قله را در ارتفاع 110 می‌گذاریم (بالای محور).
+           سهمی از x=0.5 شروع، در x=2 و x=3 محور را قطع، و در x=4.5 تمام می‌شود. -->
+      <path class="draw" style="--delay:1.0s"
+            d="M 65 190 Q 165 90 265 190"
+            fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- برچسب‌های محور x -->
-  <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-    <text x="90" y="248">۱</text>
-    <text x="140" y="248">۲</text>
-    <text x="190" y="248">۳</text>
-    <text x="240" y="248">۴</text>
-    <text x="290" y="248">۵</text>
-  </g>
+      <!-- امتداد سهمی به سمت راست و چپ (کمی بالاتر) -->
+      <path class="draw" style="--delay:1.2s"
+            d="M 40 260 Q 60 230 65 190"
+            fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+      <path class="draw" style="--delay:1.3s"
+            d="M 265 190 Q 270 230 290 260"
+            fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
 
-  <!-- سهمی y = x² - 5x + 6: ریشه‌ها x=2 و x=3 -->
-  <!-- قله در x=2.5 که در SVG میشود 165؛ ارتفاع قله = -0.25 → در SVG میشود 230+0.25*40=240 نزدیک خط -->
-  <!-- با ضریب عمودی 40 پیکسل: x=0→y=6→230-240=-10 (خارج بالا) -->
-  <!-- پس فقط بخشی از سهمی نمایش داده میشود -->
-  <path class="draw" style="--delay:1.0s"
-        d="M 90 230 Q 165 130 240 230"
-        fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+      <!-- ریشه ۱: x=2 روی (140,230) -->
+      <circle class="pt" style="--delay:1.6s" cx="140" cy="230" r="10"
+              fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
+      <!-- ریشه ۲: x=3 روی (190,230) -->
+      <circle class="pt" style="--delay:1.8s" cx="190" cy="230" r="10"
+              fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
 
-  <!-- ریشه‌ها: x=2 روی 140، x=3 روی 190 -->
-  <svg class="coord" viewBox="0 0 440 300" xmlns="http://www.w3.org/2000/svg">
-  <g stroke="rgba(125,211,252,0.10)" stroke-width="1">
-    <line x1="90" y1="20" x2="90" y2="260"/>
-    <line x1="140" y1="20" x2="140" y2="260"/>
-    <line x1="190" y1="20" x2="190" y2="260"/>
-    <line x1="240" y1="20" x2="240" y2="260"/>
-    <line x1="290" y1="20" x2="290" y2="260"/>
-    <line x1="340" y1="20" x2="340" y2="260"/>
-    <line x1="50" y1="40" x2="410" y2="40"/>
-    <line x1="50" y1="90" x2="410" y2="90"/>
-    <line x1="50" y1="140" x2="410" y2="140"/>
-    <line x1="50" y1="190" x2="410" y2="190"/>
-  </g>
+      <text class="pt" style="--delay:2.1s" x="140" y="212"
+            fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle"
+            font-family="Vazirmatn, sans-serif">ریشه ۱</text>
+      <text class="pt" style="--delay:2.1s" x="190" y="212"
+            fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle"
+            font-family="Vazirmatn, sans-serif">ریشه ۲</text>
+    </svg>
+  </div>
 
-  <line x1="50" y1="230" x2="425" y2="230" stroke="#7dd3fc" stroke-width="2"/>
-  <line x1="50" y1="260" x2="50" y2="22" stroke="#7dd3fc" stroke-width="2"/>
-  <polygon points="425,230 415,225 415,235" fill="#7dd3fc"/>
-  <polygon points="50,22 45,32 55,32" fill="#7dd3fc"/>
-  <text x="417" y="248" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">x</text>
-  <text x="30" y="30" fill="#7dd3fc" font-size="13" font-family="Vazirmatn, sans-serif">y</text>
-
-  <g fill="#8ba7d6" font-size="12" font-family="Vazirmatn, sans-serif" text-anchor="middle">
-    <text x="90" y="248">۱</text>
-    <text x="140" y="248">۲</text>
-    <text x="190" y="248">۳</text>
-    <text x="240" y="248">۴</text>
-    <text x="290" y="248">۵</text>
-  </g>
-
-  <path class="draw" style="--delay:1.0s"
-        d="M 90 230 Q 165 130 240 230"
-        fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
-
-  <circle class="pt" style="--delay:1.6s" cx="140" cy="230" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-  <circle class="pt" style="--delay:1.8s" cx="190" cy="230" r="10" fill="#f87171" stroke="#fee2e2" stroke-width="2.5"/>
-  <text class="pt" style="--delay:2.1s" x="140" y="212" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۱</text>
-  <text class="pt" style="--delay:2.1s" x="190" y="212" fill="#fecaca" font-size="13" font-weight="700" text-anchor="middle" font-family="Vazirmatn, sans-serif">ریشه ۲</text>
-</svg>
-    </div>
-
-    <div class="rule rise" style="--delay:2.4s">
-      x² − 5x + 6 = 0 &nbsp;→&nbsp; (x−2)(x−3) = 0 &nbsp;→&nbsp; x = 2 یا x = 3
-    </div>
-  </section>
-
+  <div class="rule rise" style="--delay:2.4s">
+    x² − 5x + 6 = 0 &nbsp;→&nbsp; (x−2)(x−3) = 0 &nbsp;→&nbsp; x = 2 یا x = 3
+  </div>
+</section>
   <!-- ---------- کارت ۲۰ : تا اینجا مطلب جدیدی نبود ---------- -->
   <section class="card" style="--c:#2dd4bf">
     <div class="badge rise" style="--delay:.1s">۲۰</div>
