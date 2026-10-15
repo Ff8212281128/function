@@ -2708,6 +2708,37 @@ document.getElementById('toPage8').addEventListener('click', () => switchPage(pa
 document.getElementById('restartBtn').addEventListener('click', () => {
   switchPage(page8, page1);
 });
+ /* ============================================================
+   موسیقی پس‌زمینه
+   ============================================================ */
+const bgMusic     = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+
+// تنظیم صدای ملایم
+bgMusic.volume = 0.35;
+
+// پخش موسیقی وقتی کاربر روی OK بزند (چون مرورگر اجازه‌ی autoplay بدون کلیک را نمی‌دهد)
+if (okBtn){
+  okBtn.addEventListener('click', () => {
+    bgMusic.play().then(() => {
+      musicToggle.textContent = '🔊';
+      musicToggle.classList.add('playing');
+    }).catch(() => {});
+  });
+}
+
+// دکمه‌ی روشن/خاموش موسیقی
+musicToggle.addEventListener('click', () => {
+  if (bgMusic.paused){
+    bgMusic.play();
+    musicToggle.textContent = '🔊';
+    musicToggle.classList.add('playing');
+  } else {
+    bgMusic.pause();
+    musicToggle.textContent = '🔇';
+    musicToggle.classList.remove('playing');
+  }
+});   
 </script>
 </body>
 </html>
