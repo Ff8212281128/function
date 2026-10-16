@@ -2620,15 +2620,7 @@
   <button data-page="page7">۷. وارون</button>
   <button data-page="page8">۸. پایان</button>
 </div>
-  const navBtn  = document.getElementById('navBtn');
-const navMenu = document.getElementById('navMenu');
-const pages   = [page1, page2, page3, page4, page5, page6, page7, page8];
-
-navBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  navMenu.classList.toggle('open');
-});
-
+  
 document.addEventListener('click', () => navMenu.classList.remove('open'));
 
 navMenu.querySelectorAll('button').forEach(btn => {
@@ -2868,7 +2860,16 @@ musicToggle.addEventListener('click', () => {
     musicToggle.textContent = '🔇';
     musicToggle.classList.remove('playing');
   }
-});   
+});  
+ const navBtn  = document.getElementById('navBtn');
+const navMenu = document.getElementById('navMenu');
+const pages   = [page1, page2, page3, page4, page5, page6, page7, page8];
+
+navBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  navMenu.classList.toggle('open');
+});
+   
 </script>
 </body>
   
