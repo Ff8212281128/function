@@ -2620,17 +2620,6 @@
   <button data-page="page7">۷. وارون</button>
   <button data-page="page8">۸. پایان</button>
 </div>
-  
-document.addEventListener('click', () => navMenu.classList.remove('open'));
-
-navMenu.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = document.getElementById(btn.dataset.page);
-    const current = document.querySelector('.page.active');
-    if (current && target) switchPage(current, target);
-    navMenu.classList.remove('open');
-  });
-});
   <script>
 /* ============================================================
    ۱) آسمان پرستاره
