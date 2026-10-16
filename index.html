@@ -17,7 +17,6 @@
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   <!-- موسیقی پس‌زمینه -->
-<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
 
 <!-- دکمه‌ی کنترل موسیقی -->
 <button id="musicToggle" class="music-btn" aria-label="کنترل موسیقی">
@@ -2751,7 +2750,9 @@ addEventListener('scroll', () => {
 /* ============================================================
    ۶) سوییچ بین صفحه‌ها
    ============================================================ */
+    
 function switchPage(fromEl, toEl){
+  
   if (fromEl) fromEl.classList.remove('active');
   activatePage(toEl);
 }
@@ -2810,4 +2811,6 @@ musicToggle.addEventListener('click', () => {
 });   
 </script>
 </body>
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+  <button id="music-btn" aria-label="کنترل موسیقی">🔇</button>
 </html>
