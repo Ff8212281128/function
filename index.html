@@ -7,7 +7,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-<style>
+.nav-btn{
+  position:fixed; top:20px; right:20px; z-index:100;
+  width:46px; height:46px; border-radius:50%;
+  border:1.5px solid rgba(140,200,255,.55);
+  background:linear-gradient(135deg,rgba(99,102,241,.9),rgba(45,212,191,.85));
+  color:#fff; font-size:1.3rem; cursor:pointer;
+  box-shadow:0 0 22px rgba(99,102,241,.65);
+  display:flex; align-items:center; justify-content:center;
+  font-family:inherit;
+}
+.nav-menu{
+  position:fixed; top:76px; right:20px; z-index:100;
+  background:linear-gradient(160deg,rgba(18,24,58,.98),rgba(6,10,26,.98));
+  border:1.5px solid rgba(140,200,255,.5);
+  border-radius:14px; padding:10px;
+  display:none; flex-direction:column; gap:6px;
+  box-shadow:0 0 40px -10px rgba(120,180,255,.9);
+  min-width:180px;
+}
+.nav-menu.open{display:flex}
+.nav-menu button{
+  font-family:inherit; text-align:right;
+  padding:9px 14px; border-radius:9px;
+  background:rgba(99,102,241,.12);
+  border:1px solid rgba(120,160,255,.28);
+  color:#dbe4ff; font-size:.95rem; font-weight:600;
+  cursor:pointer;
+}
+.nav-menu button:hover{background:rgba(99,102,241,.25)}
+.nav-menu button.active{background:rgba(45,212,191,.25); color:#fff}
+  <style>
   :root{
     --indigo:#6366f1;
     --blue:#4f7df9;
@@ -2578,6 +2608,36 @@
 <div id="scrollHint"> برای دیدن ادامه اسکرول کن</div>
   <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
   <button id="music-btn" aria-label="کنترل موسیقی">🔇</button>
+ <button id="navBtn" class="nav-btn" aria-label="منو">☰</button>
+<div id="navMenu" class="nav-menu">
+  <button data-page="page1">۱. الگو</button>
+  <button data-page="page2">۲. تعریف تابع</button>
+  <button data-page="page3">۳. ریشه‌ها</button>
+  <button data-page="page4">۴. معادله درجه دوم</button>
+  <button data-page="page5">۵. مرور</button>
+  <button data-page="page6">۶. دامنه</button>
+  <button data-page="page7">۷. وارون</button>
+  <button data-page="page8">۸. پایان</button>
+</div>
+  const navBtn  = document.getElementById('navBtn');
+const navMenu = document.getElementById('navMenu');
+const pages   = [page1, page2, page3, page4, page5, page6, page7, page8];
+
+navBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  navMenu.classList.toggle('open');
+});
+
+document.addEventListener('click', () => navMenu.classList.remove('open'));
+
+navMenu.querySelectorAll('button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.page);
+    const current = document.querySelector('.page.active');
+    if (current && target) switchPage(current, target);
+    navMenu.classList.remove('open');
+  });
+});
   <script>
 /* ============================================================
    ۱) آسمان پرستاره
@@ -2751,6 +2811,9 @@ function switchPage(fromEl, toEl){
   
   if (fromEl) fromEl.classList.remove('active');
   activatePage(toEl);
+  document.querySelectorAll('.nav-menu button').forEach(b => {
+  b.classList.toggle('active', b.dataset.page === toEl.id);
+});
 }
 
 /* ============================================================
