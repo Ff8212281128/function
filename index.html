@@ -16,12 +16,6 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
-  <!-- موسیقی پس‌زمینه -->
-
-<!-- دکمه‌ی کنترل موسیقی -->
-<button id="musicToggle" class="music-btn" aria-label="کنترل موسیقی">
-  🔇
-</button>
 
   body{
     font-family:'Vazirmatn',Tahoma,sans-serif;
@@ -2582,6 +2576,8 @@
       </div>
 </main>
 <div id="scrollHint"> برای دیدن ادامه اسکرول کن</div>
+  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+  <button id="music-btn" aria-label="کنترل موسیقی">🔇</button>
   <script>
 /* ============================================================
    ۱) آسمان پرستاره
@@ -2811,6 +2807,5 @@ musicToggle.addEventListener('click', () => {
 });   
 </script>
 </body>
-  <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
-  <button id="music-btn" aria-label="کنترل موسیقی">🔇</button>
+  
 </html>
