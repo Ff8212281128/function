@@ -2608,7 +2608,7 @@
 </main>
 <div id="scrollHint"> برای دیدن ادامه اسکرول کن</div>
   <audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
-  <button id="music-btn" aria-label="کنترل موسیقی">🔇</button>
+  <button id="musicToggle" class="music-btn" aria-label="کنترل موسیقی">🔇</button>
  <button id="navBtn" class="nav-btn" aria-label="منو">☰</button>
 <div id="navMenu" class="nav-menu">
   <button data-page="page1">۱. الگو</button>
@@ -2845,6 +2845,7 @@ if (okBtn){
     bgMusic.play().then(() => {
       musicToggle.textContent = '🔊';
       musicToggle.classList.add('playing');
+      
     }).catch(() => {});
   });
 }
